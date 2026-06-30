@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Sofia Nathalie 🎂</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Georgia', serif;
+      font-family: 'Lato', sans-serif;
       background: #0a0a0a;
       min-height: 100vh;
       display: flex;
@@ -17,100 +19,168 @@
       overflow: hidden;
     }
 
+    /* ── PARTICLES ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LOCKED SCREEN ── */
     #locked {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       color: #fff;
-      padding: 2rem;
-      gap: 1.2rem;
+      padding: 2.5rem;
+      gap: 1.4rem;
     }
 
-    #locked .lock-icon { font-size: 5rem; }
+    /* Animated logo */
+    .logo {
+      position: relative;
+      width: 110px;
+      height: 110px;
+    }
+
+    .logo svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 18px #f472b6) drop-shadow(0 0 40px #db2777);
+      animation: logoPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 18px #f472b6) drop-shadow(0 0 40px #db2777); }
+      50%       { transform: scale(1.08); filter: drop-shadow(0 0 30px #f9a8d4) drop-shadow(0 0 60px #ec4899); }
+    }
+
+    .logo-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: conic-gradient(#f472b6, #db2777, #9333ea, #f472b6) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      animation: spinRing 4s linear infinite;
+    }
+
+    @keyframes spinRing {
+      to { transform: rotate(360deg); }
+    }
 
     #countdown {
-      font-size: 1.8rem;
-      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
       color: #f472b6;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 20px #f472b680;
+      animation: countGlow 1s ease-in-out infinite alternate;
     }
 
+    @keyframes countGlow {
+      from { text-shadow: 0 0 10px #f472b680; }
+      to   { text-shadow: 0 0 30px #f472b6, 0 0 60px #db277780; }
+    }
+
+    /* Password */
     .pw-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.7rem;
     }
 
     .pw-section label {
-      color: #9ca3af;
-      font-size: 0.85rem;
+      color: #6b7280;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    .pw-row {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .pw-row { display: flex; gap: 0.5rem; }
 
     .pw-section input[type="password"] {
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      border: 1px solid #f472b6;
-      background: rgba(255,255,255,0.07);
+      padding: 0.6rem 1.1rem;
+      border-radius: 50px;
+      border: 1px solid #f472b650;
+      background: rgba(255,255,255,0.05);
       color: #fff;
       font-size: 1rem;
       outline: none;
-      width: 180px;
+      width: 190px;
       text-align: center;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .pw-section input[type="password"]:focus {
+      border-color: #f472b6;
+      box-shadow: 0 0 12px #f472b640;
     }
 
     .pw-section input[type="password"]::placeholder {
       letter-spacing: 1px;
-      color: #6b7280;
+      color: #4b5563;
     }
 
     .pw-section button {
-      padding: 0.5rem 1.2rem;
-      border-radius: 8px;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
       border: none;
-      background: #db2777;
+      background: linear-gradient(135deg, #db2777, #9333ea);
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
     }
 
-    .pw-section button:hover { background: #be185d; }
+    .pw-section button:hover  { opacity: 0.85; }
+    .pw-section button:active { transform: scale(0.97); }
 
     #pw-error {
       color: #f87171;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       min-height: 1rem;
+      animation: shake 0.3s ease;
     }
 
-    /* Birthday screen */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    /* ── BIRTHDAY SCREEN ── */
     #birthday {
       display: none;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       text-align: center;
-      padding: 2rem;
-      animation: fadeIn 2s ease;
+      padding: 2rem 1.5rem;
+      gap: 1.2rem;
+      position: relative;
+      z-index: 1;
+      max-height: 100vh;
+      overflow-y: auto;
+      scrollbar-width: none;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to   { opacity: 1; transform: scale(1); }
-    }
+    #birthday::-webkit-scrollbar { display: none; }
 
     body.unlocked {
-      background: linear-gradient(135deg, #1a0533, #3b0764, #7c2d8f, #db2777, #f43f8f);
+      background: linear-gradient(135deg, #0d001a, #1a0533, #3b0764, #7c2d8f, #db2777);
       background-size: 400% 400%;
-      animation: gradientShift 8s ease infinite;
+      animation: gradientShift 10s ease infinite;
     }
 
     @keyframes gradientShift {
@@ -119,64 +189,181 @@
       100% { background-position: 0% 50%; }
     }
 
-    .emoji-burst { font-size: 3rem; margin-bottom: 1rem; animation: bounce 1s infinite; }
+    .bday-logo {
+      width: 90px;
+      height: 90px;
+      animation: logoPulse 2s ease-in-out infinite, fadeIn 1s ease;
+      filter: drop-shadow(0 0 20px #f9a8d4);
+    }
+
+    .emoji-burst {
+      font-size: 2.5rem;
+      animation: bounce 1.2s ease-in-out infinite;
+    }
 
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
     }
 
     h1.bday-title {
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      color: #fff;
-      text-shadow: 0 0 20px #f9a8d4, 0 0 40px #ec4899;
-      margin-bottom: 0.3rem;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: #fce7f3;
+      font-style: italic;
+      text-shadow: 0 0 20px #f9a8d4;
     }
 
     h2.name {
-      font-size: clamp(2.4rem, 7vw, 4.5rem);
-      color: #fce7f3;
-      text-shadow: 0 0 30px #f472b6;
-      margin-bottom: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      color: #fff;
+      text-shadow: 0 0 30px #f472b6, 0 0 60px #db2777;
+      letter-spacing: 2px;
     }
 
     .message {
-      max-width: 520px;
+      max-width: 500px;
       color: #fde8f5;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 16px;
-      padding: 1.5rem 2rem;
-      backdrop-filter: blur(8px);
-      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.9;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 1.4rem 1.8rem;
+      backdrop-filter: blur(12px);
+      animation: fadeIn 1.5s ease;
     }
 
-    .hearts { font-size: 2rem; letter-spacing: 6px; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
+    /* Favorite Songs */
+    .songs-section {
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 2s ease;
+    }
+
+    .songs-section h3 {
+      font-family: 'Playfair Display', serif;
+      color: #f9a8d4;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .song-item {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(244,114,182,0.2);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      color: #fce7f3;
+      transition: background 0.2s, border-color 0.2s;
+      animation: fadeIn 0.5s ease both;
+    }
+
+    .song-item:hover {
+      background: rgba(244,114,182,0.12);
+      border-color: rgba(244,114,182,0.5);
+    }
+
+    .song-note { font-size: 1rem; }
+
+    /* Music players */
+    .music-section {
+      max-width: 500px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: fadeIn 2.5s ease;
+    }
+
+    .music-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(244,114,182,0.2);
+      border-radius: 16px;
+      padding: 1rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .music-card h4 {
+      font-family: 'Playfair Display', serif;
+      color: #f9a8d4;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
+    .music-card iframe {
+      border-radius: 10px;
+      width: 100%;
+      border: none;
+    }
+
+    .hearts {
+      font-size: 1.8rem;
+      letter-spacing: 8px;
+      animation: fadeIn 3s ease;
+    }
+
+    /* Floating hearts */
     .floater {
       position: fixed;
-      animation: floatUp linear infinite;
+      animation: floatUp linear forwards;
       pointer-events: none;
-      opacity: 0.7;
     }
 
     @keyframes floatUp {
-      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0.7; }
-      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+      0%   { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(360deg) scale(1); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
+  <canvas id="particles"></canvas>
+
   <!-- Locked state -->
   <div id="locked">
-    <div class="lock-icon">🔒</div>
+
+    <div class="logo">
+      <div class="logo-ring"></div>
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hg" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#f9a8d4"/>
+            <stop offset="100%" stop-color="#db2777"/>
+          </radialGradient>
+        </defs>
+        <!-- heart path -->
+        <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z"
+              fill="url(#hg)"/>
+        <!-- small star accents -->
+        <text x="22" y="28" font-size="10" fill="#fce7f3" opacity="0.7">✦</text>
+        <text x="65" y="26" font-size="8"  fill="#fce7f3" opacity="0.6">✦</text>
+      </svg>
+    </div>
+
     <div id="countdown">Nagko-compute...</div>
 
     <div class="pw-section">
-      <label>o i-unlock gamit ang password</label>
+      <label>i-unlock gamit ang password</label>
       <div class="pw-row">
         <input type="password" id="pw-input" placeholder="password" maxlength="30" />
         <button onclick="checkPassword()">Unlock 🔓</button>
@@ -187,9 +374,24 @@
 
   <!-- Birthday state -->
   <div id="birthday">
-    <div class="emoji-burst">🎂🎉🌸</div>
+
+    <!-- logo -->
+    <svg class="bday-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hg2" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#fce7f3"/>
+          <stop offset="100%" stop-color="#f472b6"/>
+        </radialGradient>
+      </defs>
+      <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z"
+            fill="url(#hg2)"/>
+    </svg>
+
+    <div class="emoji-burst">🎂 🎉 🌸</div>
+
     <h1 class="bday-title">Happy Birthday,</h1>
-    <h2 class="name">Sofia Nathalie! 💖</h2>
+    <h2 class="name">Sofia Nathalie 💖</h2>
+
     <div class="message">
       Sa lahat ng araw sa taon, ngayon ang pinaka-espesyal —<br/>
       kasi ito ang araw na ipinanganak ang isang taong
@@ -199,22 +401,104 @@
       karapat-dapat sa iyo.<br/><br/>
       Mahal kita, Sofia. 🌹
     </div>
+
+    <!-- Favorite Songs -->
+    <div class="songs-section">
+      <h3>🎵 Favorite Songs</h3>
+      <div class="song-list">
+        <div class="song-item" style="animation-delay:0.1s"><span class="song-note">🎵</span> Ceilings — Lizzy McAlpine</div>
+        <div class="song-item" style="animation-delay:0.2s"><span class="song-note">🎵</span> To The Bone — Pamungkas</div>
+        <div class="song-item" style="animation-delay:0.3s"><span class="song-note">🎵</span> Doubt — conan gray</div>
+        <div class="song-item" style="animation-delay:0.4s"><span class="song-note">🎵</span> Scott Street — Phoebe Bridgers</div>
+        <div class="song-item" style="animation-delay:0.5s"><span class="song-note">🎵</span> Young and Beautiful — Lana Del Rey</div>
+      </div>
+    </div>
+
+    <!-- Music Players -->
+    <div class="music-section">
+
+      <div class="music-card">
+        <h4>🎧 Background Music</h4>
+        <!-- Mundo - IV of Spades -->
+        <iframe
+          src="https://www.youtube.com/embed/7ZpNxzy17Hc?autoplay=1&loop=1&playlist=7ZpNxzy17Hc&controls=1&modestbranding=1"
+          height="80"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="music-card">
+        <h4>💌 Para Sa 'yo — Bulong</h4>
+        <!-- Bulong - December Avenue -->
+        <iframe
+          src="https://www.youtube.com/embed/YBLKKx5O9JE?controls=1&modestbranding=1"
+          height="80"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+    </div>
+
     <div class="hearts">💗 💕 💓 💞 💗</div>
+
   </div>
 
   <script>
+    /* ── PARTICLES ── */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5,
+        dx: (Math.random() - 0.5) * 0.3,
+        dy: (Math.random() - 0.5) * 0.3,
+        alpha: Math.random() * 0.5 + 0.2,
+      };
+    }
+
+    for (let i = 0; i < 120; i++) particles.push(createParticle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(244,114,182,${p.alpha})`;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* ── COUNTDOWN ── */
     function isBirthday() {
       const now = new Date();
       return now.getMonth() === 7 && now.getDate() === 22;
     }
 
     function updateCountdown() {
-      const now = new Date();
+      const now  = new Date();
       const year = now.getMonth() > 7 || (now.getMonth() === 7 && now.getDate() > 22)
-        ? now.getFullYear() + 1
-        : 2026;
+        ? now.getFullYear() + 1 : 2026;
       const target = new Date(year, 7, 22, 0, 0, 0);
-      const diff = target - now;
+      const diff   = target - now;
 
       if (diff <= 0) { showBirthday(); return; }
 
@@ -224,9 +508,10 @@
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       document.getElementById('countdown').textContent =
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        `${days}d  ${hours}h  ${minutes}m  ${seconds}s`;
     }
 
+    /* ── UNLOCK ── */
     function showBirthday() {
       document.getElementById('locked').style.display = 'none';
       const bday = document.getElementById('birthday');
@@ -244,29 +529,36 @@
       } else {
         error.textContent = 'Mali ang password. Try ulit! 🙈';
         document.getElementById('pw-input').value = '';
+        // re-trigger shake animation
+        error.style.animation = 'none';
+        void error.offsetWidth;
+        error.style.animation = '';
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('pw-input').addEventListener('keydown', function(e) {
+      document.getElementById('pw-input').addEventListener('keydown', e => {
         if (e.key === 'Enter') checkPassword();
       });
     });
 
+    /* ── FLOATING HEARTS ── */
     function spawnHearts() {
-      const emojis = ['💗', '💕', '🌸', '🎀', '✨', '💖'];
+      const emojis = ['💗','💕','🌸','🎀','✨','💖','🌹','🎶'];
       setInterval(() => {
         const el = document.createElement('div');
         el.classList.add('floater');
         el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = Math.random() * 100 + 'vw';
-        el.style.animationDuration = (4 + Math.random() * 5) + 's';
-        el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+        el.style.left   = Math.random() * 100 + 'vw';
+        el.style.bottom = '-40px';
+        el.style.animationDuration  = (5 + Math.random() * 6) + 's';
+        el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
         document.body.appendChild(el);
-        setTimeout(() => el.remove(), 9000);
-      }, 400);
+        setTimeout(() => el.remove(), 11000);
+      }, 500);
     }
 
+    /* ── INIT ── */
     if (isBirthday()) {
       showBirthday();
     } else {
