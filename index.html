@@ -14,10 +14,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
-    /* ── LOCKED SCREEN ── */
     #locked {
       display: flex;
       flex-direction: column;
@@ -26,21 +25,10 @@
       text-align: center;
       color: #fff;
       padding: 2rem;
+      gap: 1.2rem;
     }
 
-    #locked .lock-icon { font-size: 5rem; margin-bottom: 1rem; }
-
-    #locked h1 {
-      font-size: 1.6rem;
-      color: #f9a8d4;
-      margin-bottom: 0.5rem;
-    }
-
-    #locked p {
-      color: #9ca3af;
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
+    #locked .lock-icon { font-size: 5rem; }
 
     #countdown {
       font-size: 1.8rem;
@@ -49,7 +37,61 @@
       letter-spacing: 2px;
     }
 
-    /* ── BIRTHDAY SCREEN ── */
+    .pw-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pw-section label {
+      color: #9ca3af;
+      font-size: 0.85rem;
+    }
+
+    .pw-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pw-section input[type="password"] {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #f472b6;
+      background: rgba(255,255,255,0.07);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      width: 180px;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+
+    .pw-section input[type="password"]::placeholder {
+      letter-spacing: 1px;
+      color: #6b7280;
+    }
+
+    .pw-section button {
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      background: #db2777;
+      color: #fff;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .pw-section button:hover { background: #be185d; }
+
+    #pw-error {
+      color: #f87171;
+      font-size: 0.8rem;
+      min-height: 1rem;
+    }
+
+    /* Birthday screen */
     #birthday {
       display: none;
       flex-direction: column;
@@ -65,7 +107,6 @@
       to   { opacity: 1; transform: scale(1); }
     }
 
-    /* Animated gradient background when unlocked */
     body.unlocked {
       background: linear-gradient(135deg, #1a0533, #3b0764, #7c2d8f, #db2777, #f43f8f);
       background-size: 400% 400%;
@@ -114,10 +155,8 @@
 
     .hearts { font-size: 2rem; letter-spacing: 6px; }
 
-    /* floating hearts */
     .floater {
       position: fixed;
-      font-size: 1.5rem;
       animation: floatUp linear infinite;
       pointer-events: none;
       opacity: 0.7;
@@ -134,9 +173,16 @@
   <!-- Locked state -->
   <div id="locked">
     <div class="lock-icon">🔒</div>
-    <h1>Isang espesyal na mensahe ang naghihintay...</h1>
-    <p>Mabubuksan lamang ito sa <strong style="color:#f9a8d4;">Agosto 22, 2026</strong></p>
     <div id="countdown">Nagko-compute...</div>
+
+    <div class="pw-section">
+      <label>o i-unlock gamit ang password</label>
+      <div class="pw-row">
+        <input type="password" id="pw-input" placeholder="password" maxlength="30" />
+        <button onclick="checkPassword()">Unlock 🔓</button>
+      </div>
+      <div id="pw-error"></div>
+    </div>
   </div>
 
   <!-- Birthday state -->
@@ -159,7 +205,7 @@
   <script>
     function isBirthday() {
       const now = new Date();
-      return now.getMonth() === 7 && now.getDate() === 22; // August = 7 (0-indexed)
+      return now.getMonth() === 7 && now.getDate() === 22;
     }
 
     function updateCountdown() {
@@ -167,13 +213,10 @@
       const year = now.getMonth() > 7 || (now.getMonth() === 7 && now.getDate() > 22)
         ? now.getFullYear() + 1
         : 2026;
-      const target = new Date(year, 7, 22, 0, 0, 0); // Aug 22
+      const target = new Date(year, 7, 22, 0, 0, 0);
       const diff = target - now;
 
-      if (diff <= 0) {
-        showBirthday();
-        return;
-      }
+      if (diff <= 0) { showBirthday(); return; }
 
       const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -191,6 +234,24 @@
       document.body.classList.add('unlocked');
       spawnHearts();
     }
+
+    function checkPassword() {
+      const input = document.getElementById('pw-input').value;
+      const error = document.getElementById('pw-error');
+      if (input === 'aug22py') {
+        error.textContent = '';
+        showBirthday();
+      } else {
+        error.textContent = 'Mali ang password. Try ulit! 🙈';
+        document.getElementById('pw-input').value = '';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('pw-input').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') checkPassword();
+      });
+    });
 
     function spawnHearts() {
       const emojis = ['💗', '💕', '🌸', '🎀', '✨', '💖'];
