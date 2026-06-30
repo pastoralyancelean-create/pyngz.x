@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="fil">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pyang</title>
   <link rel="icon" type="image/jpeg" href="photo3.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -498,6 +500,7 @@
       transform: scale(1.04);
       border-color: rgba(244,114,182,0.5);
     }
+    .songs-section {
       width: 100%;
       animation: fadeUp 1s ease 1s both;
     }
@@ -796,7 +799,7 @@
     <div id="countdown">Loading...</div>
 
     <div class="pw-section">
-      <label>Unlock your Password</label>
+      <label>Enter Password</label>
       <div class="pw-row">
         <input type="password" id="pw-input" placeholder="password" maxlength="30" />
         <button onclick="checkPassword()">Unlock</button>
@@ -832,7 +835,7 @@
         <div class="env-seal">💌</div>
         <div class="env-body"></div>
       </div>
-      <p class="env-hint">✦ i-click ang envelope ✦</p>
+      <p class="env-hint">✦ click to open ✦</p>
     </div>
 
     <!-- Modal pop-up -->
@@ -881,7 +884,7 @@
 
     <!-- Gallery -->
     <div class="gallery-section">
-      <h3>Ganda ni Krass</h3>
+      <h3>Beauty of Krass</h3>
       <div class="gallery-grid">
         <img src="photo1.jpg" alt="Krass" />
         <img src="photo2.jpg" alt="Krass" />
@@ -919,7 +922,7 @@
         <div class="petal petal-3"><img src="photo3.jpg" alt=""/></div>
         <div class="flower-center">✿</div>
       </div>
-      <p class="flower-hint">✦ i-click ang bulaklak ✦</p>
+      <p class="flower-hint">✦ click the flower ✦</p>
     </div>
 
     <div class="hearts">♡ &nbsp; ♡ &nbsp; ♡</div>
