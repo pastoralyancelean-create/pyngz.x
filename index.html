@@ -461,7 +461,43 @@
       text-shadow: 0 0 12px #f472b6;
     }
 
-    .songs-section {
+    .gallery-section {
+      width: 100%;
+      animation: fadeUp 1s ease 1.1s both;
+    }
+
+    .gallery-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #f9a8d4;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(244,114,182,0.18);
+      transition: transform 0.3s ease, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.04);
+      border-color: rgba(244,114,182,0.5);
+    }
       width: 100%;
       animation: fadeUp 1s ease 1s both;
     }
@@ -651,7 +687,7 @@
     <div class="emoji-burst">✦  ✦  ✦</div>
 
     <h1 class="bday-title">Happy Birthday,</h1>
-    <h2 class="name">Sofia Nathalie</h2>
+    <h2 class="name">Krass</h2>
     <div class="divider"></div>
 
     <!-- Envelope -->
@@ -706,6 +742,16 @@
             Maligayang kaarawan sa iyo, Sofia Nathalie. ✦
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery-section">
+      <h3>Ganda ni Krass</h3>
+      <div class="gallery-grid">
+        <img src="photo1.jpg" alt="Krass" />
+        <img src="photo2.jpg" alt="Krass" />
+        <img src="photo3.jpg" alt="Krass" />
       </div>
     </div>
 
