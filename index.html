@@ -370,7 +370,10 @@
       max-height: 88vh;
       overflow-y: auto;
       scrollbar-width: none;
-      background: url('magni.jpg') center center / cover no-repeat;
+      background:
+        linear-gradient(rgba(3,0,12,0.88), rgba(3,0,12,0.88)),
+        url('magni.jpg') center center / cover no-repeat;
+      background-attachment: local, local;
       border-radius: 20px;
       border: 1.5px solid rgba(244,114,182,0.4);
       box-shadow: 0 0 60px rgba(244,114,182,0.3);
@@ -384,14 +387,7 @@
       transform: scale(1) translateY(0);
     }
 
-    .modal-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(3, 0, 12, 0.88);
-      border-radius: 20px;
-      z-index: 0;
-    }
+    .modal-card::before { display: none; }
 
     .modal-inner {
       position: relative;
