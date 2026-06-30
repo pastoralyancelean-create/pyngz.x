@@ -235,45 +235,57 @@
       animation: fadeUp 1s ease 0.8s both;
     }
 
+    .env-title-label {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #f9a8d4;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 14px #f472b6, 0 0 30px #db277780;
+      margin-bottom: 0.9rem;
+    }
+
     .envelope-outer {
       width: 100%;
       position: relative;
       cursor: pointer;
       filter: drop-shadow(0 8px 32px rgba(244,114,182,0.35));
-      transition: filter 0.3s;
+      transition: filter 0.3s, transform 0.2s;
     }
 
     .envelope-outer:hover {
       filter: drop-shadow(0 12px 40px rgba(244,114,182,0.55));
+      transform: translateY(-3px);
     }
 
-    /* envelope body */
+    .envelope-outer:active { transform: scale(0.97); }
+
     .env-body {
       width: 100%;
       background: linear-gradient(160deg, #2a0540 0%, #1a0030 60%, #3b0a60 100%);
       border: 1.5px solid rgba(244,114,182,0.35);
       border-radius: 6px 6px 14px 14px;
-      padding-top: 38px;
       position: relative;
       overflow: hidden;
-      min-height: 110px;
+      height: 160px;
     }
 
-    /* bottom triangle fold lines */
+    /* left & right bottom triangle folds */
     .env-body::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 70px;
-      background: linear-gradient(135deg, #3b0a60 50%, transparent 50%),
-                  linear-gradient(225deg, #3b0a60 50%, transparent 50%);
+      height: 80px;
+      background: linear-gradient(135deg, #2a0540 50%, transparent 50%),
+                  linear-gradient(225deg, #2a0540 50%, transparent 50%);
       background-size: 50% 100%;
       background-position: left, right;
       background-repeat: no-repeat;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
-    /* flap */
+    /* flap triangle */
     .env-flap {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -282,9 +294,8 @@
       border-right: 290px solid transparent;
       border-top: 90px solid #3d0b65;
       transform-origin: top center;
-      transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+      transition: transform 0.55s cubic-bezier(.4,0,.2,1);
       z-index: 3;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
     }
 
     .envelope-outer.open .env-flap {
@@ -294,46 +305,27 @@
     /* wax seal */
     .env-seal {
       position: absolute;
-      top: 52px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      width: 42px;
-      height: 42px;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
       background: radial-gradient(circle at 40% 35%, #f472b6, #9333ea);
       border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.25);
+      border: 2px solid rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       z-index: 4;
-      box-shadow: 0 0 14px #f472b680;
+      box-shadow: 0 0 18px #f472b690;
       transition: opacity 0.3s, transform 0.3s;
     }
 
     .envelope-outer.open .env-seal {
       opacity: 0;
-      transform: translateX(-50%) scale(0.6);
+      transform: translate(-50%, -50%) scale(0.5);
     }
-
-    /* envelope label */
-    .env-label {
-      position: absolute;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: rgba(249,168,212,0.7);
-      font-size: 0.78rem;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      white-space: nowrap;
-      z-index: 2;
-      transition: opacity 0.3s;
-    }
-
-    .envelope-outer.open .env-label { opacity: 0; }
 
     /* click hint */
     .env-hint {
@@ -341,7 +333,7 @@
       color: rgba(249,168,212,0.55);
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
       animation: pulse 2s ease-in-out infinite;
     }
 
@@ -350,74 +342,113 @@
       50%      { opacity: 1; }
     }
 
-    /* letter that slides out */
-    .letter-slide {
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 0, 18, 0.82);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-card {
+      position: relative;
       width: 100%;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.8s cubic-bezier(.4,0,.2,1);
-      position: relative;
-      z-index: 1;
-    }
-
-    .envelope-outer.open + .letter-slide {
-      max-height: 1200px;
-    }
-
-    .letter-inner {
+      max-width: 540px;
+      max-height: 88vh;
+      overflow-y: auto;
+      scrollbar-width: none;
       background: url('magni.jpg') center center / cover no-repeat;
-      border-radius: 0 0 16px 16px;
-      border: 1.5px solid rgba(244,114,182,0.3);
-      border-top: none;
-      position: relative;
-      overflow: hidden;
+      border-radius: 20px;
+      border: 1.5px solid rgba(244,114,182,0.4);
+      box-shadow: 0 0 60px rgba(244,114,182,0.3);
+      transform: scale(0.88) translateY(30px);
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
     }
 
-    .letter-inner::before {
+    .modal-card::-webkit-scrollbar { display: none; }
+
+    .modal-overlay.show .modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(5, 0, 18, 0.72);
+      background: rgba(5, 0, 18, 0.70);
+      border-radius: 20px;
       z-index: 0;
     }
 
-    .letter-content {
+    .modal-inner {
       position: relative;
       z-index: 1;
-      padding: 2.2rem 2rem 2rem;
+      padding: 2.4rem 2rem 2rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(244,114,182,0.15);
+      border: 1px solid rgba(244,114,182,0.35);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      color: #f9a8d4;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+
+    .modal-close:hover { background: rgba(244,114,182,0.3); }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: #f9a8d4;
+      text-align: center;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 16px #f472b6, 0 1px 8px rgba(0,0,0,0.9);
+      margin-bottom: 1.4rem;
+    }
+
+    .modal-body {
+      font-size: 0.96rem;
+      line-height: 2;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.95);
       text-align: left;
     }
 
-    .letter-title {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.25rem;
-      color: #f9a8d4;
-      text-shadow: 0 0 12px #f472b6, 0 1px 6px rgba(0,0,0,0.9);
-      margin-bottom: 1.2rem;
-      text-align: center;
-      letter-spacing: 1px;
-    }
+    .modal-body p { margin-bottom: 1rem; }
 
-    .letter-body {
-      font-size: 0.97rem;
-      line-height: 2;
-      color: #fff;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,1);
-    }
-
-    .letter-body p {
-      margin-bottom: 1rem;
-    }
-
-    .letter-footer {
+    .modal-footer {
       margin-top: 1.4rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1rem;
       color: #f9a8d4;
       text-align: center;
-      text-shadow: 0 0 10px #f472b6, 0 1px 6px rgba(0,0,0,0.9);
+      text-shadow: 0 0 12px #f472b6, 0 1px 8px rgba(0,0,0,0.9);
     }
 
     .songs-section {
@@ -600,53 +631,54 @@
 
     <!-- Envelope -->
     <div class="envelope-wrap">
-      <div class="envelope-outer" id="envelope" onclick="toggleEnvelope()">
+      <div class="env-title-label">✦ Message ✦</div>
+      <div class="envelope-outer" id="envelope" onclick="openLetter()">
         <div class="env-flap"></div>
         <div class="env-seal">💌</div>
-        <div class="env-body">
-          <div class="env-label">✦ Message ✦</div>
-        </div>
+        <div class="env-body"></div>
       </div>
       <p class="env-hint">✦ i-click ang envelope ✦</p>
+    </div>
 
-      <div class="letter-slide" id="letterSlide">
-        <div class="letter-inner">
-          <div class="letter-content">
-            <div class="letter-title">Sa Pag-ikot ng Mundo</div>
-            <div class="letter-body">
-              <p>
-                Habang binibilang ng mundo ang mga segundo,<br/>
-                May isang pangalang tahimik na nagmamarka sa puso ko.<br/>
-                Hindi naman lingid sa kaalaman ng sarili kong tadhana,<br/>
-                Na sa dinami-rami ng tao, sa iyo ako unang natulala.
-              </p>
-              <p>
-                Oo, crush kita o baka hanggang ngayon nga.<br/>
-                Isang paghangang nagsimula sa simpleng pagsubaybay sa iyong mga tawa't luha<br/>
-                Sa kung paano sumasayaw ang liwanag sa iyong mga mata,<br/>
-                At kung paano mo ginagawang espesyal ang bawat ordinaryong umaga.
-              </p>
-              <p>
-                Ngayong araw, humihinto ang mundo para sa iyo.<br/>
-                Ihipan mo ang mga kandila ng nakalipas na taon,<br/>
-                At salubungin ang bagong yugto nang may buong tapang at layon.
-              </p>
-              <p>
-                Saksi ang tula na 'to sa ganda ng iyong pag-iral,<br/>
-                Na ang isang katulad mo ay labis na nagbibigay-buhay sa salitang "mahal."
-              </p>
-              <p>
-                Kaya sa araw na ito, Sofia Nathalie, ang tanging hiling ko lang,<br/>
-                Sana'y mapuno ng ngiti ang iyong mga labi, hindi lang ngayon, kundi sa walang katapusan.
-              </p>
-              <p>
-                Salamat sa ligaya na dala mo, kahit sa malayo lang kita kayang titigan.
-              </p>
-            </div>
-            <div class="letter-footer">
-              Maligayang kaarawan, aking hinahangaan.<br/>
-              Maligayang kaarawan sa iyo, Sofia Nathalie. 🌹
-            </div>
+    <!-- Modal pop-up -->
+    <div class="modal-overlay" id="letterModal" onclick="closeLetter(event)">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeLetter()">✕</button>
+        <div class="modal-inner">
+          <div class="modal-title">Sa Pag-ikot ng Mundo</div>
+          <div class="modal-body">
+            <p>
+              Habang binibilang ng mundo ang mga segundo,<br/>
+              May isang pangalang tahimik na nagmamarka sa puso ko.<br/>
+              Hindi naman lingid sa kaalaman ng sarili kong tadhana,<br/>
+              Na sa dinami-rami ng tao, sa iyo ako unang natulala.
+            </p>
+            <p>
+              Oo, crush kita o baka hanggang ngayon nga.<br/>
+              Isang paghangang nagsimula sa simpleng pagsubaybay sa iyong mga tawa't luha<br/>
+              Sa kung paano sumasayaw ang liwanag sa iyong mga mata,<br/>
+              At kung paano mo ginagawang espesyal ang bawat ordinaryong umaga.
+            </p>
+            <p>
+              Ngayong araw, humihinto ang mundo para sa iyo.<br/>
+              Ihipan mo ang mga kandila ng nakalipas na taon,<br/>
+              At salubungin ang bagong yugto nang may buong tapang at layon.
+            </p>
+            <p>
+              Saksi ang tula na 'to sa ganda ng iyong pag-iral,<br/>
+              Na ang isang katulad mo ay labis na nagbibigay-buhay sa salitang "mahal."
+            </p>
+            <p>
+              Kaya sa araw na ito, Sofia Nathalie, ang tanging hiling ko lang,<br/>
+              Sana'y mapuno ng ngiti ang iyong mga labi, hindi lang ngayon, kundi sa walang katapusan.
+            </p>
+            <p>
+              Salamat sa ligaya na dala mo, kahit sa malayo lang kita kayang titigan.
+            </p>
+          </div>
+          <div class="modal-footer">
+            Maligayang kaarawan, aking hinahangaan.<br/>
+            Maligayang kaarawan sa iyo, Sofia Nathalie. 🌹
           </div>
         </div>
       </div>
@@ -767,10 +799,21 @@
       }
     }
 
-    /* envelope toggle */
-    function toggleEnvelope() {
+    /* envelope / modal */
+    function openLetter() {
       const env = document.getElementById('envelope');
-      env.classList.toggle('open');
+      env.classList.add('open');
+      setTimeout(() => {
+        document.getElementById('letterModal').classList.add('show');
+      }, 350);
+    }
+
+    function closeLetter(e) {
+      if (e && e.target !== document.getElementById('letterModal')) return;
+      document.getElementById('letterModal').classList.remove('show');
+      setTimeout(() => {
+        document.getElementById('envelope').classList.remove('open');
+      }, 300);
     }
 
     /* password */
