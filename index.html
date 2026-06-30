@@ -19,7 +19,6 @@
       overflow: hidden;
     }
 
-    /* ── PARTICLES ── */
     #particles {
       position: fixed;
       inset: 0;
@@ -27,21 +26,20 @@
       z-index: 0;
     }
 
-    /* ── LOCKED SCREEN ── */
+    /* ── LOCKED ── */
     #locked {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       text-align: center;
       color: #fff;
       padding: 2.5rem;
-      gap: 1.4rem;
+      gap: 1.6rem;
     }
 
-    /* Animated logo */
+    /* logo */
     .logo {
       position: relative;
       width: 110px;
@@ -56,8 +54,8 @@
     }
 
     @keyframes logoPulse {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 18px #f472b6) drop-shadow(0 0 40px #db2777); }
-      50%       { transform: scale(1.08); filter: drop-shadow(0 0 30px #f9a8d4) drop-shadow(0 0 60px #ec4899); }
+      0%,100% { transform: scale(1);    filter: drop-shadow(0 0 18px #f472b6) drop-shadow(0 0 40px #db2777); }
+      50%      { transform: scale(1.09); filter: drop-shadow(0 0 30px #f9a8d4) drop-shadow(0 0 60px #ec4899); }
     }
 
     .logo-ring {
@@ -72,9 +70,7 @@
       animation: spinRing 4s linear infinite;
     }
 
-    @keyframes spinRing {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
 
     #countdown {
       font-family: 'Playfair Display', serif;
@@ -83,7 +79,7 @@
       color: #f472b6;
       letter-spacing: 3px;
       text-shadow: 0 0 20px #f472b680;
-      animation: countGlow 1s ease-in-out infinite alternate;
+      animation: countGlow 1.2s ease-in-out infinite alternate;
     }
 
     @keyframes countGlow {
@@ -91,7 +87,7 @@
       to   { text-shadow: 0 0 30px #f472b6, 0 0 60px #db277780; }
     }
 
-    /* Password */
+    /* password */
     .pw-section {
       display: flex;
       flex-direction: column;
@@ -101,15 +97,15 @@
 
     .pw-section label {
       color: #6b7280;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
     .pw-row { display: flex; gap: 0.5rem; }
 
     .pw-section input[type="password"] {
-      padding: 0.6rem 1.1rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 50px;
       border: 1px solid #f472b650;
       background: rgba(255,255,255,0.05);
@@ -124,7 +120,7 @@
 
     .pw-section input[type="password"]:focus {
       border-color: #f472b6;
-      box-shadow: 0 0 12px #f472b640;
+      box-shadow: 0 0 14px #f472b640;
     }
 
     .pw-section input[type="password"]::placeholder {
@@ -141,7 +137,6 @@
       font-size: 0.9rem;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.1s;
-      letter-spacing: 0.5px;
     }
 
     .pw-section button:hover  { opacity: 0.85; }
@@ -151,28 +146,31 @@
       color: #f87171;
       font-size: 0.78rem;
       min-height: 1rem;
-      animation: shake 0.3s ease;
     }
+
+    .shake { animation: shake 0.35s ease; }
 
     @keyframes shake {
       0%,100% { transform: translateX(0); }
-      25%      { transform: translateX(-6px); }
-      75%      { transform: translateX(6px); }
+      25%      { transform: translateX(-7px); }
+      75%      { transform: translateX(7px); }
     }
 
-    /* ── BIRTHDAY SCREEN ── */
+    /* ── BIRTHDAY ── */
     #birthday {
       display: none;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 2rem 1.5rem;
-      gap: 1.2rem;
+      padding: 2rem 1.5rem 3rem;
+      gap: 1.3rem;
       position: relative;
       z-index: 1;
       max-height: 100vh;
       overflow-y: auto;
       scrollbar-width: none;
+      width: 100%;
+      max-width: 560px;
     }
 
     #birthday::-webkit-scrollbar { display: none; }
@@ -189,16 +187,21 @@
       100% { background-position: 0% 50%; }
     }
 
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .bday-logo {
       width: 90px;
       height: 90px;
-      animation: logoPulse 2s ease-in-out infinite, fadeIn 1s ease;
+      animation: logoPulse 2s ease-in-out infinite, fadeUp 1s ease both;
       filter: drop-shadow(0 0 20px #f9a8d4);
     }
 
     .emoji-burst {
-      font-size: 2.5rem;
-      animation: bounce 1.2s ease-in-out infinite;
+      font-size: 2.4rem;
+      animation: bounce 1.3s ease-in-out infinite, fadeUp 1s ease 0.2s both;
     }
 
     @keyframes bounce {
@@ -208,103 +211,89 @@
 
     h1.bday-title {
       font-family: 'Playfair Display', serif;
+      font-style: italic;
       font-size: clamp(1.8rem, 5vw, 3rem);
       color: #fce7f3;
-      font-style: italic;
       text-shadow: 0 0 20px #f9a8d4;
+      animation: fadeUp 1s ease 0.4s both;
     }
 
     h2.name {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
       color: #fff;
       text-shadow: 0 0 30px #f472b6, 0 0 60px #db2777;
       letter-spacing: 2px;
+      animation: fadeUp 1s ease 0.6s both;
     }
 
     .message {
       max-width: 500px;
       color: #fde8f5;
       font-size: 1rem;
-      line-height: 1.9;
+      line-height: 1.95;
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 20px;
-      padding: 1.4rem 1.8rem;
+      padding: 1.5rem 1.8rem;
       backdrop-filter: blur(12px);
-      animation: fadeIn 1.5s ease;
+      animation: fadeUp 1s ease 0.8s both;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Favorite Songs */
+    /* songs */
     .songs-section {
-      max-width: 500px;
       width: 100%;
-      animation: fadeIn 2s ease;
+      animation: fadeUp 1s ease 1s both;
     }
 
     .songs-section h3 {
       font-family: 'Playfair Display', serif;
       color: #f9a8d4;
-      font-size: 1rem;
+      font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.7rem;
     }
 
-    .song-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    .song-list { display: flex; flex-direction: column; gap: 0.45rem; }
 
     .song-item {
       background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(244,114,182,0.2);
+      border: 1px solid rgba(244,114,182,0.18);
       border-radius: 12px;
-      padding: 0.6rem 1rem;
+      padding: 0.55rem 1rem;
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #fce7f3;
-      transition: background 0.2s, border-color 0.2s;
-      animation: fadeIn 0.5s ease both;
+      transition: background 0.25s, border-color 0.25s;
+      animation: fadeUp 0.5s ease both;
     }
 
     .song-item:hover {
-      background: rgba(244,114,182,0.12);
+      background: rgba(244,114,182,0.13);
       border-color: rgba(244,114,182,0.5);
     }
 
-    .song-note { font-size: 1rem; }
-
-    /* Music players */
+    /* dedicated song */
     .music-section {
-      max-width: 500px;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      animation: fadeIn 2.5s ease;
+      animation: fadeUp 1s ease 1.2s both;
     }
 
     .music-card {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(244,114,182,0.2);
       border-radius: 16px;
-      padding: 1rem;
+      padding: 1rem 1.2rem;
       backdrop-filter: blur(8px);
     }
 
     .music-card h4 {
       font-family: 'Playfair Display', serif;
       color: #f9a8d4;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 0.7rem;
@@ -319,10 +308,10 @@
     .hearts {
       font-size: 1.8rem;
       letter-spacing: 8px;
-      animation: fadeIn 3s ease;
+      animation: fadeUp 1s ease 1.4s both;
     }
 
-    /* Floating hearts */
+    /* floaters */
     .floater {
       position: fixed;
       animation: floatUp linear forwards;
@@ -331,7 +320,7 @@
 
     @keyframes floatUp {
       0%   { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0.8; }
-      100% { transform: translateY(-10vh) rotate(360deg) scale(1); opacity: 0; }
+      100% { transform: translateY(-10vh) rotate(360deg) scale(1);  opacity: 0; }
     }
   </style>
 </head>
@@ -339,9 +328,11 @@
 
   <canvas id="particles"></canvas>
 
-  <!-- Locked state -->
-  <div id="locked">
+  <!-- hidden background music -->
+  <audio id="bgMusic" src="aesthetic/backgroundmusic.mp3" loop></audio>
 
+  <!-- Locked -->
+  <div id="locked">
     <div class="logo">
       <div class="logo-ring"></div>
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -351,10 +342,8 @@
             <stop offset="100%" stop-color="#db2777"/>
           </radialGradient>
         </defs>
-        <!-- heart path -->
         <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z"
               fill="url(#hg)"/>
-        <!-- small star accents -->
         <text x="22" y="28" font-size="10" fill="#fce7f3" opacity="0.7">✦</text>
         <text x="65" y="26" font-size="8"  fill="#fce7f3" opacity="0.6">✦</text>
       </svg>
@@ -372,10 +361,9 @@
     </div>
   </div>
 
-  <!-- Birthday state -->
+  <!-- Birthday -->
   <div id="birthday">
 
-    <!-- logo -->
     <svg class="bday-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="hg2" cx="50%" cy="40%" r="60%">
@@ -399,38 +387,23 @@
       Sana ngayong kaarawan mo, mapuno ka ng saya,
       pagmamahal, at lahat ng mabubuting bagay na
       karapat-dapat sa iyo.<br/><br/>
-      Mahal kita, Sofia. 🌹
+      Mahal kita, Sofia. �
     </div>
 
-    <!-- Favorite Songs -->
     <div class="songs-section">
       <h3>🎵 Favorite Songs</h3>
       <div class="song-list">
-        <div class="song-item" style="animation-delay:0.1s"><span class="song-note">🎵</span> Ceilings — Lizzy McAlpine</div>
-        <div class="song-item" style="animation-delay:0.2s"><span class="song-note">🎵</span> To The Bone — Pamungkas</div>
-        <div class="song-item" style="animation-delay:0.3s"><span class="song-note">🎵</span> Doubt — conan gray</div>
-        <div class="song-item" style="animation-delay:0.4s"><span class="song-note">🎵</span> Scott Street — Phoebe Bridgers</div>
-        <div class="song-item" style="animation-delay:0.5s"><span class="song-note">🎵</span> Young and Beautiful — Lana Del Rey</div>
+        <div class="song-item" style="animation-delay:.1s">🎵 Ceilings — Lizzy McAlpine</div>
+        <div class="song-item" style="animation-delay:.2s">🎵 To The Bone — Pamungkas</div>
+        <div class="song-item" style="animation-delay:.3s">🎵 Doubt — Conan Gray</div>
+        <div class="song-item" style="animation-delay:.4s">🎵 Scott Street — Phoebe Bridgers</div>
+        <div class="song-item" style="animation-delay:.5s">🎵 Young and Beautiful — Lana Del Rey</div>
       </div>
     </div>
 
-    <!-- Music Players -->
     <div class="music-section">
-
-      <div class="music-card">
-        <h4>🎧 Background Music</h4>
-        <!-- Mundo - IV of Spades -->
-        <iframe
-          src="https://www.youtube.com/embed/7ZpNxzy17Hc?autoplay=1&loop=1&playlist=7ZpNxzy17Hc&controls=1&modestbranding=1"
-          height="80"
-          allow="autoplay; encrypted-media"
-          allowfullscreen>
-        </iframe>
-      </div>
-
       <div class="music-card">
         <h4>💌 Para Sa 'yo — Bulong</h4>
-        <!-- Bulong - December Avenue -->
         <iframe
           src="https://www.youtube.com/embed/YBLKKx5O9JE?controls=1&modestbranding=1"
           height="80"
@@ -438,7 +411,6 @@
           allowfullscreen>
         </iframe>
       </div>
-
     </div>
 
     <div class="hearts">💗 💕 💓 💞 💗</div>
@@ -446,10 +418,9 @@
   </div>
 
   <script>
-    /* ── PARTICLES ── */
+    /* particles */
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
-    let particles = [];
 
     function resizeCanvas() {
       canvas.width  = window.innerWidth;
@@ -458,91 +429,82 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    function createParticle() {
-      return {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.5 + 0.5,
-        dx: (Math.random() - 0.5) * 0.3,
-        dy: (Math.random() - 0.5) * 0.3,
-        alpha: Math.random() * 0.5 + 0.2,
-      };
-    }
+    const particles = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.4,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.5 + 0.15,
+    }));
 
-    for (let i = 0; i < 120; i++) particles.push(createParticle());
-
-    function animateParticles() {
+    (function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(p => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(244,114,182,${p.alpha})`;
         ctx.fill();
-        p.x += p.dx;
-        p.y += p.dy;
+        p.x += p.dx; p.y += p.dy;
         if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
       });
       requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
+    })();
 
-    /* ── COUNTDOWN ── */
+    /* countdown */
     function isBirthday() {
-      const now = new Date();
-      return now.getMonth() === 7 && now.getDate() === 22;
+      const n = new Date();
+      return n.getMonth() === 7 && n.getDate() === 22;
     }
 
     function updateCountdown() {
       const now  = new Date();
-      const year = now.getMonth() > 7 || (now.getMonth() === 7 && now.getDate() > 22)
+      const year = (now.getMonth() > 7 || (now.getMonth() === 7 && now.getDate() > 22))
         ? now.getFullYear() + 1 : 2026;
-      const target = new Date(year, 7, 22, 0, 0, 0);
-      const diff   = target - now;
-
+      const diff = new Date(year, 7, 22) - now;
       if (diff <= 0) { showBirthday(); return; }
 
-      const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('countdown').textContent =
-        `${days}d  ${hours}h  ${minutes}m  ${seconds}s`;
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('countdown').textContent = `${d}d  ${h}h  ${m}m  ${s}s`;
     }
 
-    /* ── UNLOCK ── */
+    /* show birthday */
     function showBirthday() {
       document.getElementById('locked').style.display = 'none';
       const bday = document.getElementById('birthday');
       bday.style.display = 'flex';
       document.body.classList.add('unlocked');
+      // play background music
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.5;
+      music.play().catch(() => {});
       spawnHearts();
     }
 
+    /* password */
     function checkPassword() {
-      const input = document.getElementById('pw-input').value;
+      const val   = document.getElementById('pw-input').value;
       const error = document.getElementById('pw-error');
-      if (input === 'aug22py') {
-        error.textContent = '';
+      if (val === 'aug22py') {
         showBirthday();
       } else {
         error.textContent = 'Mali ang password. Try ulit! 🙈';
-        document.getElementById('pw-input').value = '';
-        // re-trigger shake animation
-        error.style.animation = 'none';
+        error.classList.remove('shake');
         void error.offsetWidth;
-        error.style.animation = '';
+        error.classList.add('shake');
+        document.getElementById('pw-input').value = '';
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('pw-input').addEventListener('keydown', e => {
-        if (e.key === 'Enter') checkPassword();
-      });
+    document.getElementById('pw-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPassword();
     });
 
-    /* ── FLOATING HEARTS ── */
+    /* floating hearts */
     function spawnHearts() {
       const emojis = ['💗','💕','🌸','🎀','✨','💖','🌹','🎶'];
       setInterval(() => {
@@ -551,14 +513,14 @@
         el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
         el.style.left   = Math.random() * 100 + 'vw';
         el.style.bottom = '-40px';
-        el.style.animationDuration  = (5 + Math.random() * 6) + 's';
+        el.style.animationDuration = (5 + Math.random() * 6) + 's';
         el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 11000);
       }, 500);
     }
 
-    /* ── INIT ── */
+    /* init */
     if (isBirthday()) {
       showBirthday();
     } else {
