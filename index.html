@@ -234,16 +234,32 @@
 
     .message {
       max-width: 500px;
-      color: #fde8f5;
+      color: #fff;
       font-size: 1rem;
       line-height: 1.95;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: url('magni.jpg') center center / cover no-repeat;
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 20px;
       padding: 1.5rem 1.8rem;
-      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
       animation: fadeUp 1s ease 0.8s both;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
+
+    .message::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 0, 25, 0.55);
+      backdrop-filter: blur(2px);
+      border-radius: 20px;
+      z-index: 0;
+    }
+
+    .message br { display: block; }
+
+    .message * { position: relative; z-index: 1; }
 
     .songs-section {
       width: 100%;
