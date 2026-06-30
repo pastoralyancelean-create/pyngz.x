@@ -11,12 +11,20 @@
 
     body {
       font-family: 'Lato', sans-serif;
-      background: #0a0a0a;
+      background: #0a0a0a url('magni.jpg') center center / cover no-repeat fixed;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 0, 20, 0.62);
+      z-index: 0;
     }
 
     #particles {
@@ -413,16 +421,31 @@
     <div class="emoji-burst">🎂 🎉 🌸</div>
 
     <h1 class="bday-title">Happy Birthday,</h1>
-    <h2 class="name">Sofia Nathalie �</h2>
+    <h2 class="name">Sofia Nathalie  </h2>
 
     <div class="message">
-      Sa lahat ng araw sa taon, ngayon ang pinaka-espesyal —<br/>
-      kasi ito ang araw na ipinanganak ang isang taong
-      hindi ko mapigilan ang ngitian tuwing nakikita ko.<br/><br/>
-      Sana ngayong kaarawan mo, mapuno ka ng saya,
-      pagmamahal, at lahat ng mabubuting bagay na
-      karapat-dapat sa iyo.<br/><br/>
-      Mahal kita, Sofia. 🌹
+      Sa Pag-ikot ng Mundo<br/><br/>
+      Habang binibilang ng mundo ang mga segundo,<br/>
+      May isang pangalang tahimik na nagmamarka sa puso ko.<br/>
+      Hindi naman lingid sa kaalaman ng sarili kong tadhana,<br/>
+      Na sa dinami-rami ng tao, sa iyo ako unang natulala.<br/><br/>
+      Oo, crush kita o baka hanggang ngayon nga.<br/>
+      Isang paghangang nagsimula sa simpleng pagsubaybay<br/>
+      sa iyong mga tawa't luha<br/>
+      Sa kung paano sumasayaw ang liwanag sa iyong mga mata,<br/>
+      At kung paano mo ginagawang espesyal ang bawat ordinaryong umaga.<br/><br/>
+      Ngayong araw, humihinto ang mundo para sa iyo.<br/>
+      Ihipan mo ang mga kandila ng nakalipas na taon,<br/>
+      At salubungin ang bagong yugto nang may buong tapang at layon.<br/><br/>
+      Saksi ang tula na 'to sa ganda ng iyong pag-iral,<br/>
+      Na ang isang katulad mo ay labis na nagbibigay-buhay sa salitang "mahal."<br/><br/>
+      Kaya sa araw na ito, Sofia Nathalie, ang tanging hiling ko lang,<br/>
+      Sana'y mapuno ng ngiti ang iyong mga labi,<br/>
+      hindi lang ngayon, kundi sa walang katapusan.<br/><br/>
+      Salamat sa ligaya na dala mo,<br/>
+      kahit sa malayo lang kita kayang titigan.<br/><br/>
+      Maligayang kaarawan, aking hinahangaan.<br/>
+      Maligayang kaarawan sa iyo, Sofia Nathalie. 🌹
     </div>
 
     <!-- bg music player bar -->
