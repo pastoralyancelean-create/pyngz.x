@@ -225,17 +225,19 @@
     }
 
     .message {
-      max-width: 500px;
+      width: 100%;
+      max-width: 620px;
       color: #fff;
       font-size: 1rem;
       line-height: 1.95;
       background: url('magni.jpg') center center / cover no-repeat;
       border: 1px solid rgba(255,255,255,0.25);
       border-radius: 20px;
-      padding: 1.5rem 1.8rem;
+      padding: 2.5rem 2.2rem;
       position: relative;
       overflow: hidden;
       animation: fadeUp 1s ease 0.8s both;
+      min-height: 420px;
     }
 
     .message::before {
@@ -415,7 +417,7 @@
     <div id="countdown">Nagko-compute...</div>
 
     <div class="pw-section">
-      <label>i-unlock gamit ang password</label>
+      <label>Unlock your Password</label>
       <div class="pw-row">
         <input type="password" id="pw-input" placeholder="password" maxlength="30" />
         <button onclick="checkPassword()">Unlock 🔓</button>
