@@ -633,6 +633,115 @@
       0%   { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0.8; }
       100% { transform: translateY(-10vh) rotate(360deg) scale(1);  opacity: 0; }
     }
+
+    /* ── FLOWER ── */
+    .flower-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      animation: fadeUp 1s ease 1.3s both;
+    }
+
+    .flower-label {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #f9a8d4;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .flower-hint {
+      font-size: 0.7rem;
+      color: rgba(249,168,212,0.5);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .flower-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      cursor: pointer;
+    }
+
+    /* center bud */
+    .flower-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #f9a8d4, #db2777);
+      border: 2px solid rgba(255,255,255,0.25);
+      box-shadow: 0 0 18px #f472b690;
+      z-index: 5;
+      transition: transform 0.4s ease, box-shadow 0.4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .flower-wrap.bloomed .flower-center {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 0 28px #f472b6;
+    }
+
+    /* petals */
+    .petal {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      transform-origin: center center;
+      transition: transform 0.6s cubic-bezier(.4,0,.2,1), opacity 0.5s;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .petal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    /* closed state — all petals stacked at center */
+    .petal-1 { transform: translate(-50%, -50%) rotate(0deg)   translateY(0px)  scale(0.1); }
+    .petal-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(0px)  scale(0.1); }
+    .petal-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(0px)  scale(0.1); }
+
+    /* bloomed state — petals spread out */
+    .flower-wrap.bloomed .petal { opacity: 1; }
+    .flower-wrap.bloomed .petal-1 { transform: translate(-50%, -50%) rotate(0deg)   translateY(-68px) scale(1); }
+    .flower-wrap.bloomed .petal-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(-68px) scale(1); }
+    .flower-wrap.bloomed .petal-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(-68px) scale(1); }
+
+    /* stem */
+    .flower-stem {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 0;
+      background: linear-gradient(to bottom, #86efac, #166534);
+      border-radius: 2px;
+      transition: height 0.5s ease 0.2s;
+      z-index: 1;
+    }
+
+    .flower-wrap.bloomed .flower-stem {
+      height: 50px;
+    }
   </style>
 </head>
 <body>
@@ -774,6 +883,19 @@
 
 
 
+    <!-- Flower -->
+    <div class="flower-section">
+      <div class="flower-label">✦ For You ✦</div>
+      <div class="flower-wrap" id="flower" onclick="toggleFlower()">
+        <div class="flower-stem"></div>
+        <div class="petal petal-1"><img src="photo1.jpg" alt=""/></div>
+        <div class="petal petal-2"><img src="photo2.jpg" alt=""/></div>
+        <div class="petal petal-3"><img src="photo3.jpg" alt=""/></div>
+        <div class="flower-center">✿</div>
+      </div>
+      <p class="flower-hint">✦ i-click ang bulaklak ✦</p>
+    </div>
+
     <div class="hearts">♡ &nbsp; ♡ &nbsp; ♡</div>
 
   </div>
@@ -895,6 +1017,11 @@
     document.getElementById('pw-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') checkPassword();
     });
+
+    /* flower toggle */
+    function toggleFlower() {
+      document.getElementById('flower').classList.toggle('bloomed');
+    }
 
     /* floating hearts */
     function spawnHearts() {
