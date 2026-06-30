@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Sofia Nathalie 🎂</title>
+  <link rel="icon" type="image/jpeg" href="photo3.jpg" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
 
@@ -190,38 +191,50 @@
     }
 
     .bday-logo {
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       animation: logoPulse 2s ease-in-out infinite, fadeUp 1s ease both;
-      filter: drop-shadow(0 0 20px #f9a8d4);
+      filter: drop-shadow(0 0 14px #f9a8d4);
     }
 
     .emoji-burst {
-      font-size: 2.4rem;
-      animation: bounce 1.3s ease-in-out infinite, fadeUp 1s ease 0.2s both;
+      font-size: 1.5rem;
+      letter-spacing: 10px;
+      opacity: 0.75;
+      animation: fadeUp 1s ease 0.2s both;
     }
 
     @keyframes bounce {
       0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
+      50%      { transform: translateY(-6px); }
     }
 
     h1.bday-title {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      color: #fce7f3;
-      text-shadow: 0 0 20px #f9a8d4;
+      font-weight: 400;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: #f9a8d4;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px #f472b650;
       animation: fadeUp 1s ease 0.4s both;
     }
 
     h2.name {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      font-weight: 700;
       color: #fff;
-      text-shadow: 0 0 30px #f472b6, 0 0 60px #db2777;
-      letter-spacing: 2px;
+      text-shadow: 0 0 24px #f472b680;
+      letter-spacing: 3px;
       animation: fadeUp 1s ease 0.6s both;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #f472b6, transparent);
+      animation: fadeUp 1s ease 0.7s both;
     }
 
     /* ── ENVELOPE ── */
@@ -455,32 +468,42 @@
 
     .songs-section h3 {
       font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
       color: #f9a8d4;
-      font-size: 0.85rem;
-      letter-spacing: 2px;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
     }
 
-    .song-list { display: flex; flex-direction: column; gap: 0.45rem; }
+    .song-list { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .song-item {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(244,114,182,0.18);
-      border-radius: 12px;
-      padding: 0.55rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.12);
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
       display: flex;
       align-items: center;
-      gap: 0.7rem;
-      font-size: 0.88rem;
-      color: #fce7f3;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: #e8d5f0;
       transition: background 0.25s, border-color 0.25s;
       animation: fadeUp 0.5s ease both;
     }
 
+    .song-item::before {
+      content: '♪';
+      color: #f472b6;
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+
     .song-item:hover {
-      background: rgba(244,114,182,0.13);
-      border-color: rgba(244,114,182,0.5);
+      background: rgba(244,114,182,0.08);
+      border-color: rgba(244,114,182,0.3);
     }
 
     .music-section {
@@ -489,20 +512,22 @@
     }
 
     .music-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(244,114,182,0.2);
-      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.15);
+      border-radius: 14px;
       padding: 1rem 1.2rem;
-      backdrop-filter: blur(8px);
     }
 
     .music-card h4 {
       font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
       color: #f9a8d4;
       font-size: 0.78rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 0.7rem;
+      opacity: 0.85;
     }
 
     .music-card iframe {
@@ -514,11 +539,10 @@
     /* music player bar */
     .player-bar {
       width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(244,114,182,0.2);
-      border-radius: 16px;
-      padding: 0.9rem 1.2rem;
-      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.15);
+      border-radius: 14px;
+      padding: 0.8rem 1.2rem;
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -527,22 +551,24 @@
 
     .player-bar span {
       font-family: 'Playfair Display', serif;
+      font-style: italic;
       color: #f9a8d4;
       font-size: 0.78rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       flex: 1;
       text-align: left;
+      opacity: 0.85;
     }
 
     .player-btn {
       background: linear-gradient(135deg, #db2777, #9333ea);
       border: none;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       color: #fff;
-      font-size: 1rem;
+      font-size: 0.9rem;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -555,8 +581,9 @@
     .player-btn:active { transform: scale(0.95); }
 
     .hearts {
-      font-size: 1.8rem;
-      letter-spacing: 8px;
+      font-size: 1.1rem;
+      letter-spacing: 10px;
+      opacity: 0.5;
       animation: fadeUp 1s ease 1.4s both;
     }
 
@@ -602,7 +629,7 @@
       <label>Unlock your Password</label>
       <div class="pw-row">
         <input type="password" id="pw-input" placeholder="password" maxlength="30" />
-        <button onclick="checkPassword()">Unlock 🔓</button>
+        <button onclick="checkPassword()">Unlock</button>
       </div>
       <div id="pw-error"></div>
     </div>
@@ -621,10 +648,11 @@
       <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z" fill="url(#hg2)"/>
     </svg>
 
-    <div class="emoji-burst">🎂 🎉 🌸</div>
+    <div class="emoji-burst">✦  ✦  ✦</div>
 
     <h1 class="bday-title">Happy Birthday,</h1>
-    <h2 class="name">Sofia Nathalie  </h2>
+    <h2 class="name">Sofia Nathalie</h2>
+    <div class="divider"></div>
 
     <!-- Envelope -->
     <div class="envelope-wrap">
@@ -675,7 +703,7 @@
           </div>
           <div class="modal-footer">
             Maligayang kaarawan, aking hinahangaan.<br/>
-            Maligayang kaarawan sa iyo, Sofia Nathalie. 🌹
+            Maligayang kaarawan sa iyo, Sofia Nathalie. ✦
           </div>
         </div>
       </div>
@@ -683,24 +711,24 @@
 
     <!-- bg music player bar -->
     <div class="player-bar">
-      <span>🎵 Background Music</span>
+      <span>♪ Background Music</span>
       <button class="player-btn" id="toggleBtn" onclick="toggleMusic()">⏸</button>
     </div>
 
     <div class="songs-section">
-      <h3>🎵 Favorite Songs</h3>
+      <h3>Playlist</h3>
       <div class="song-list">
-        <div class="song-item" style="animation-delay:.1s">🎵 Ceilings — Lizzy McAlpine</div>
-        <div class="song-item" style="animation-delay:.2s">🎵 To The Bone — Pamungkas</div>
-        <div class="song-item" style="animation-delay:.3s">🎵 Doubt — Conan Gray</div>
-        <div class="song-item" style="animation-delay:.4s">🎵 Scott Street — Phoebe Bridgers</div>
-        <div class="song-item" style="animation-delay:.5s">🎵 Young and Beautiful — Lana Del Rey</div>
+        <div class="song-item" style="animation-delay:.1s">Ceilings — Lizzy McAlpine</div>
+        <div class="song-item" style="animation-delay:.2s">To The Bone — Pamungkas</div>
+        <div class="song-item" style="animation-delay:.3s">Doubt — Conan Gray</div>
+        <div class="song-item" style="animation-delay:.4s">Scott Street — Phoebe Bridgers</div>
+        <div class="song-item" style="animation-delay:.5s">Young and Beautiful — Lana Del Rey</div>
       </div>
     </div>
 
     <div class="music-section">
       <div class="music-card">
-        <h4>💌 Para Sa 'yo — Bulong</h4>
+        <h4>Para Sa 'yo — Bulong</h4>
         <iframe
           src="https://www.youtube.com/embed/YBLKKx5O9JE?controls=1&modestbranding=1"
           height="80"
@@ -710,7 +738,7 @@
       </div>
     </div>
 
-    <div class="hearts">💗 💕 💓 💞 💗</div>
+    <div class="hearts">♡ &nbsp; ♡ &nbsp; ♡</div>
 
   </div>
 
