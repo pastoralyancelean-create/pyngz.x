@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Sofia Nathalie 🎂</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #0a0a0a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    /* ── LOCKED SCREEN ── */
+    #locked {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    #locked .lock-icon { font-size: 5rem; margin-bottom: 1rem; }
+
+    #locked h1 {
+      font-size: 1.6rem;
+      color: #f9a8d4;
+      margin-bottom: 0.5rem;
+    }
+
+    #locked p {
+      color: #9ca3af;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #countdown {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #f472b6;
+      letter-spacing: 2px;
+    }
+
+    /* ── BIRTHDAY SCREEN ── */
+    #birthday {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Animated gradient background when unlocked */
+    body.unlocked {
+      background: linear-gradient(135deg, #1a0533, #3b0764, #7c2d8f, #db2777, #f43f8f);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .emoji-burst { font-size: 3rem; margin-bottom: 1rem; animation: bounce 1s infinite; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    h1.bday-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #fff;
+      text-shadow: 0 0 20px #f9a8d4, 0 0 40px #ec4899;
+      margin-bottom: 0.3rem;
+    }
+
+    h2.name {
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      color: #fce7f3;
+      text-shadow: 0 0 30px #f472b6;
+      margin-bottom: 1.5rem;
+    }
+
+    .message {
+      max-width: 520px;
+      color: #fde8f5;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      backdrop-filter: blur(8px);
+      margin-bottom: 2rem;
+    }
+
+    .hearts { font-size: 2rem; letter-spacing: 6px; }
+
+    /* floating hearts */
+    .floater {
+      position: fixed;
+      font-size: 1.5rem;
+      animation: floatUp linear infinite;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Locked state -->
+  <div id="locked">
+    <div class="lock-icon">🔒</div>
+    <h1>Isang espesyal na mensahe ang naghihintay...</h1>
+    <p>Mabubuksan lamang ito sa <strong style="color:#f9a8d4;">Agosto 22, 2026</strong></p>
+    <div id="countdown">Nagko-compute...</div>
+  </div>
+
+  <!-- Birthday state -->
+  <div id="birthday">
+    <div class="emoji-burst">🎂🎉🌸</div>
+    <h1 class="bday-title">Happy Birthday,</h1>
+    <h2 class="name">Sofia Nathalie! 💖</h2>
+    <div class="message">
+      Sa lahat ng araw sa taon, ngayon ang pinaka-espesyal —<br/>
+      kasi ito ang araw na ipinanganak ang isang taong
+      hindi ko mapigilan ang ngitian tuwing nakikita ko.<br/><br/>
+      Sana ngayong kaarawan mo, mapuno ka ng saya,
+      pagmamahal, at lahat ng mabubuting bagay na
+      karapat-dapat sa iyo.<br/><br/>
+      Mahal kita, Sofia. 🌹
+    </div>
+    <div class="hearts">💗 💕 💓 💞 💗</div>
+  </div>
+
+  <script>
+    function isBirthday() {
+      const now = new Date();
+      return now.getMonth() === 7 && now.getDate() === 22; // August = 7 (0-indexed)
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const year = now.getMonth() > 7 || (now.getMonth() === 7 && now.getDate() > 22)
+        ? now.getFullYear() + 1
+        : 2026;
+      const target = new Date(year, 7, 22, 0, 0, 0); // Aug 22
+      const diff = target - now;
+
+      if (diff <= 0) {
+        showBirthday();
+        return;
+      }
+
+      const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('countdown').textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    function showBirthday() {
+      document.getElementById('locked').style.display = 'none';
+      const bday = document.getElementById('birthday');
+      bday.style.display = 'flex';
+      document.body.classList.add('unlocked');
+      spawnHearts();
+    }
+
+    function spawnHearts() {
+      const emojis = ['💗', '💕', '🌸', '🎀', '✨', '💖'];
+      setInterval(() => {
+        const el = document.createElement('div');
+        el.classList.add('floater');
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (4 + Math.random() * 5) + 's';
+        el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 9000);
+      }, 400);
+    }
+
+    if (isBirthday()) {
+      showBirthday();
+    } else {
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+  </script>
+</body>
+</html>
