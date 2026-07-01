@@ -1277,10 +1277,11 @@
         <div class="cake-plate"></div>
       </div>
       <p class="cake-hint" id="cakeHint">✦ tap the cake ✦</p>
+      <p class="cake-hint" id="cakeTimer" style="display:none;"></p>
       <h1 class="bday-title">Happy Birthday,</h1>
       <h2 class="name">Krass</h2>
       <div class="divider"></div>
-      <button class="open-btn" id="continueBtn" style="display:none;" onclick="showMenu()">Continue ✦</button>
+      <button class="open-btn" id="continueBtn" style="display:none;" onclick="showMenu()">Tap to Continue ✦</button>
     </div>
 
     <!-- PAGE 2: Menu -->
@@ -1474,19 +1475,39 @@
       cakePlayed = true;
       const hint = document.getElementById('cakeHint');
       if (hint) hint.style.display = 'none';
+      const timerEl = document.getElementById('cakeTimer');
+      if (timerEl) timerEl.style.display = 'block';
       const hb = document.getElementById('hbMusic');
       hb.volume = 0.8;
       hb.play().catch(() => {});
-      const showContinue = () => {
-        const btn = document.getElementById('continueBtn');
-        if (btn) {
-          btn.style.display = 'inline-block';
-          btn.style.animation = 'fadeUp 0.6s ease both';
+
+      let secs = 15;
+      if (timerEl) timerEl.textContent = `✦ wait for ${secs} seconds ✦`;
+      const countdown = setInterval(() => {
+        secs--;
+        if (secs > 0) {
+          if (timerEl) timerEl.textContent = `✦ wait for ${secs} seconds ✦`;
+        } else {
+          clearInterval(countdown);
+          if (timerEl) timerEl.style.display = 'none';
+          showContinueBtn();
         }
-      };
-      // show continue after 30s or when song ends, whichever comes first
-      const timer = setTimeout(showContinue, 30000);
-      hb.addEventListener('ended', () => { clearTimeout(timer); showContinue(); }, { once: true });
+      }, 1000);
+
+      // also show if song ends before 15s
+      hb.addEventListener('ended', () => {
+        clearInterval(countdown);
+        if (timerEl) timerEl.style.display = 'none';
+        showContinueBtn();
+      }, { once: true });
+    }
+
+    function showContinueBtn() {
+      const btn = document.getElementById('continueBtn');
+      if (btn) {
+        btn.style.display = 'inline-block';
+        btn.style.animation = 'fadeUp 0.6s ease both';
+      }
     }
 
     /* navigation */
@@ -1511,7 +1532,11 @@
       const env = document.getElementById('envelope');
       if (env) env.classList.remove('open');
       document.getElementById('letterModal').classList.remove('show');
-      // stop music
+      // stop happy birthday song
+      const hb = document.getElementById('hbMusic');
+      hb.pause();
+      hb.currentTime = 0;
+      // stop bg music
       const music = document.getElementById('bgMusic');
       music.pause();
       music.currentTime = 0;
