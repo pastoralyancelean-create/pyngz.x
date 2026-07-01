@@ -239,7 +239,139 @@
       animation: fadeUp 1s ease 0.7s both;
     }
 
-    /* ── BIRTHDAY HERO ── */
+    /* ── CAKE ── */
+    .cake-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      animation: fadeUp 1s ease 0.1s both;
+    }
+
+    /* candles row */
+    .candles {
+      display: flex;
+      gap: 14px;
+      margin-bottom: -2px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .candle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flame {
+      width: 10px;
+      height: 16px;
+      background: radial-gradient(ellipse at 50% 80%, #fde68a, #f97316, #ef4444);
+      border-radius: 50% 50% 30% 30%;
+      animation: flicker 0.6s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+      box-shadow: 0 0 8px #fde68a, 0 0 16px #f9731680;
+      position: relative;
+    }
+
+    .flame::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 6px;
+      background: #fff8;
+      border-radius: 50%;
+    }
+
+    @keyframes flicker {
+      0%   { transform: scaleX(1)   scaleY(1)   rotate(-2deg); opacity: 1; }
+      33%  { transform: scaleX(0.85) scaleY(1.1) rotate(2deg);  opacity: 0.9; }
+      66%  { transform: scaleX(1.1) scaleY(0.9) rotate(-1deg); opacity: 1; }
+      100% { transform: scaleX(0.9) scaleY(1.05) rotate(3deg); opacity: 0.95; }
+    }
+
+    .candle-stick {
+      width: 8px;
+      height: 28px;
+      border-radius: 3px;
+    }
+
+    .candle:nth-child(1) .candle-stick { background: linear-gradient(to bottom, #f9a8d4, #db2777); }
+    .candle:nth-child(2) .candle-stick { background: linear-gradient(to bottom, #c4b5fd, #7c3aed); }
+    .candle:nth-child(3) .candle-stick { background: linear-gradient(to bottom, #f9a8d4, #db2777); }
+
+    .candle:nth-child(1) .flame { animation-delay: 0s; }
+    .candle:nth-child(2) .flame { animation-delay: 0.2s; }
+    .candle:nth-child(3) .flame { animation-delay: 0.4s; }
+
+    /* cake body */
+    .cake-body {
+      width: 180px;
+      position: relative;
+      border-radius: 12px 12px 16px 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(244,114,182,0.35), 0 2px 8px rgba(0,0,0,0.5);
+      border: 1.5px solid rgba(255,255,255,0.15);
+    }
+
+    .cake-photo {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.85);
+    }
+
+    /* frosting overlay on top */
+    .cake-frosting {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 22px;
+      background: linear-gradient(to bottom, rgba(252,231,243,0.92), rgba(252,231,243,0.2));
+      border-radius: 0 0 40% 40% / 0 0 30px 30px;
+    }
+
+    /* drips */
+    .cake-drips {
+      position: absolute;
+      top: 14px; left: 0; right: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 8px;
+    }
+
+    .drip {
+      width: 10px;
+      background: rgba(252,231,243,0.85);
+      border-radius: 0 0 6px 6px;
+      animation: drip 3s ease-in-out infinite;
+    }
+
+    .drip:nth-child(1) { height: 18px; animation-delay: 0s; }
+    .drip:nth-child(2) { height: 12px; animation-delay: 0.5s; }
+    .drip:nth-child(3) { height: 20px; animation-delay: 1s; }
+    .drip:nth-child(4) { height: 14px; animation-delay: 1.5s; }
+    .drip:nth-child(5) { height: 16px; animation-delay: 0.8s; }
+
+    @keyframes drip {
+      0%,100% { transform: scaleY(1); }
+      50%      { transform: scaleY(1.08); }
+    }
+
+    /* cake plate */
+    .cake-plate {
+      width: 200px;
+      height: 12px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border-radius: 50%;
+      border: 1px solid rgba(244,114,182,0.2);
+      margin-top: -4px;
+    }
     #pg-hero {
       display: flex;
       flex-direction: column;
@@ -1000,6 +1132,26 @@
         <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z" fill="url(#hg2)"/>
       </svg>
       <div class="emoji-burst">✦  ✦  ✦</div>
+      <!-- Cake -->
+      <div class="cake-wrap">
+        <div class="candles">
+          <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
+          <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
+          <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
+        </div>
+        <div class="cake-body">
+          <img class="cake-photo" src="childhood.jpg" alt="Krass" />
+          <div class="cake-frosting"></div>
+          <div class="cake-drips">
+            <div class="drip"></div>
+            <div class="drip"></div>
+            <div class="drip"></div>
+            <div class="drip"></div>
+            <div class="drip"></div>
+          </div>
+        </div>
+        <div class="cake-plate"></div>
+      </div>
       <h1 class="bday-title">Happy Birthday,</h1>
       <h2 class="name">Krass</h2>
       <div class="divider"></div>
@@ -1056,7 +1208,7 @@
     <div id="pg-pictures" class="sub-page">
       <button class="back-btn" onclick="showMenu()">‹ Back</button>
       <div class="gallery-section">
-        <h3>Beauty of Krass</h3>
+        <h3>Beauty of my Krass</h3>
         <div class="gallery-grid">
           <img src="photo1.jpg" alt="Krass" />
           <img src="photo2.jpg" alt="Krass" />
@@ -1083,11 +1235,11 @@
       <div class="songs-section">
         <h3>Playlist</h3>
         <div class="song-list">
-          <div class="song-item" style="animation-delay:.1s" onclick="playSong('https://www.youtube.com/watch?v=tZHWwFovhpc','Ceilings — Lizzy McAlpine')">Ceilings — Lizzy McAlpine</div>
-          <div class="song-item" style="animation-delay:.2s" onclick="playSong('https://www.youtube.com/watch?v=7dlvNGFtQQU','To The Bone — Pamungkas')">To The Bone — Pamungkas</div>
-          <div class="song-item" style="animation-delay:.3s" onclick="playSong('https://www.youtube.com/watch?v=NnDMqR5ECEY','Doubt — Conan Gray')">Doubt — Conan Gray</div>
-          <div class="song-item" style="animation-delay:.4s" onclick="playSong('https://www.youtube.com/watch?v=4CRHLbvwOMU','Scott Street — Phoebe Bridgers')">Scott Street — Phoebe Bridgers</div>
-          <div class="song-item" style="animation-delay:.5s" onclick="playSong('https://www.youtube.com/watch?v=0eSGFKfVZFI','Young and Beautiful — Lana Del Rey')">Young and Beautiful — Lana Del Rey</div>
+          <div class="song-item" style="animation-delay:.1s" onclick="playSong('https://www.youtube.com/results?search_query=Lizzy+McAlpine+Ceilings+official','Ceilings — Lizzy McAlpine')">Ceilings — Lizzy McAlpine</div>
+          <div class="song-item" style="animation-delay:.2s" onclick="playSong('https://www.youtube.com/results?search_query=Pamungkas+To+The+Bone+official','To The Bone — Pamungkas')">To The Bone — Pamungkas</div>
+          <div class="song-item" style="animation-delay:.3s" onclick="playSong('https://www.youtube.com/results?search_query=Conan+Gray+Doubt+official','Doubt — Conan Gray')">Doubt — Conan Gray</div>
+          <div class="song-item" style="animation-delay:.4s" onclick="playSong('https://www.youtube.com/results?search_query=Phoebe+Bridgers+Scott+Street+official','Scott Street — Phoebe Bridgers')">Scott Street — Phoebe Bridgers</div>
+          <div class="song-item" style="animation-delay:.5s" onclick="playSong('https://www.youtube.com/results?search_query=Lana+Del+Rey+Young+and+Beautiful+official','Young and Beautiful — Lana Del Rey')">Young and Beautiful — Lana Del Rey</div>
         </div>
       </div>
     </div>
