@@ -2,39 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pyang</title>
   <link rel="icon" type="image/jpeg" href="photo3.jpg" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)" />
-  <link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin />
-  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap)" rel="stylesheet" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
   <style>
-    /* Reset & base */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { height: 100%; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      margin: 0;
-      font-family: 'Lato', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: #fff;
+      font-family: 'Lato', sans-serif;
       background: #0a0a0a;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Respect user motion preference */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-    }
-
-    /* Canvas background */
     #particles {
       position: fixed;
       inset: 0;
@@ -42,7 +29,7 @@
       z-index: 0;
     }
 
-    /* Locked state */
+    /* ── LOCKED ── */
     #locked {
       position: relative;
       z-index: 1;
@@ -50,16 +37,15 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 2.5rem 1.5rem;
-      gap: 1.4rem;
-      width: 100%;
-      max-width: 640px;
+      color: #fff;
+      padding: 2.5rem;
+      gap: 1.6rem;
     }
 
     .logo {
       position: relative;
-      width: clamp(84px, 12vw, 110px);
-      height: clamp(84px, 12vw, 110px);
+      width: 110px;
+      height: 110px;
     }
 
     .logo svg {
@@ -67,7 +53,6 @@
       height: 100%;
       filter: drop-shadow(0 0 18px #f472b6) drop-shadow(0 0 40px #db2777);
       animation: logoPulse 2.5s ease-in-out infinite;
-      will-change: transform, filter;
     }
 
     @keyframes logoPulse {
@@ -91,13 +76,11 @@
 
     #countdown {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-size: 2rem;
       font-weight: 700;
       color: #f472b6;
       letter-spacing: 3px;
       animation: countGlow 1.2s ease-in-out infinite alternate;
-      min-height: 2.2ch;
-      user-select: none;
     }
 
     @keyframes countGlow {
@@ -105,106 +88,97 @@
       to   { text-shadow: 0 0 30px #f472b6, 0 0 60px #db277780; }
     }
 
-    /* Password section */
     .pw-section {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.7rem;
-      width: 100%;
     }
 
     .pw-section label {
-      color: #c4b5d6;
-      font-size: 0.85rem;
+      color: #6b7280;
+      font-size: 0.78rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
-    .pw-row { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .pw-row { display: flex; gap: 0.5rem; }
 
     .pw-section input[type="password"] {
-      padding: 0.7rem 1.2rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 50px;
       border: 1px solid #f472b650;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.05);
       color: #fff;
       font-size: 1rem;
       outline: none;
-      width: min(240px, 70vw);
+      width: 190px;
       text-align: center;
       letter-spacing: 4px;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .pw-section input[type="password"]:focus {
       border-color: #f472b6;
       box-shadow: 0 0 14px #f472b640;
-      background: rgba(255,255,255,0.1);
     }
 
     .pw-section input[type="password"]::placeholder {
       letter-spacing: 1px;
-      color: #9ca3af;
+      color: #4b5563;
     }
 
     .pw-section button {
-      padding: 0.7rem 1.4rem;
+      padding: 0.6rem 1.4rem;
       border-radius: 50px;
       border: none;
       background: linear-gradient(135deg, #db2777, #9333ea);
       color: #fff;
-      font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25);
+      transition: opacity 0.2s, transform 0.1s;
     }
 
-    .pw-section button:hover  { opacity: 0.9; box-shadow: 0 8px 22px rgba(147, 51, 234, 0.35); }
-    .pw-section button:active { transform: translateY(1px); }
-
-    .pw-section button:focus-visible {
-      outline: 2px solid #f472b6;
-      outline-offset: 2px;
-      border-radius: 50px;
-    }
+    .pw-section button:hover  { opacity: 0.85; }
+    .pw-section button:active { transform: scale(0.97); }
 
     #pw-error {
-      color: #fca5a5;
-      font-size: 0.85rem;
+      color: #f87171;
+      font-size: 0.78rem;
       min-height: 1rem;
     }
 
     .shake { animation: shake 0.35s ease; }
+
     @keyframes shake {
       0%,100% { transform: translateX(0); }
       25%      { transform: translateX(-7px); }
       75%      { transform: translateX(7px); }
     }
 
-    /* Birthday state */
+    /* ── BIRTHDAY ── */
     #birthday {
       display: none;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 2rem 1rem 3rem;
-      gap: 1.2rem;
+      padding: 2rem 1.5rem 3rem;
+      gap: 1.3rem;
       position: relative;
       z-index: 1;
       max-height: 100vh;
       overflow-y: auto;
       scrollbar-width: none;
       width: 100%;
-      max-width: 720px;
+      max-width: 560px;
     }
+
     #birthday::-webkit-scrollbar { display: none; }
 
     body.unlocked {
       background: linear-gradient(135deg, #0d001a, #1a0533, #3b0764, #7c2d8f, #db2777);
       background-size: 400% 400%;
-      animation: gradientShift 12s ease infinite;
+      animation: gradientShift 10s ease infinite;
     }
 
     @keyframes gradientShift {
@@ -219,113 +193,254 @@
     }
 
     .bday-logo {
-      width: clamp(56px, 10vw, 80px);
-      height: clamp(56px, 10vw, 80px);
-      animation: logoPulse 2s ease-in-out infinite, fadeUp 0.8s ease both;
+      width: 70px;
+      height: 70px;
+      animation: logoPulse 2s ease-in-out infinite, fadeUp 1s ease both;
       filter: drop-shadow(0 0 14px #f9a8d4);
     }
 
     .emoji-burst {
-      font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+      font-size: 1.5rem;
       letter-spacing: 10px;
-      opacity: 0.85;
-      animation: fadeUp 0.8s ease 0.15s both;
-      user-select: none;
+      opacity: 0.75;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
     }
 
     h1.bday-title {
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1.2rem, 3.5vw, 1.9rem);
+      font-size: clamp(1.3rem, 4vw, 2rem);
       color: #f9a8d4;
       letter-spacing: 2px;
       text-shadow: 0 0 20px #f472b650;
-      animation: fadeUp 0.8s ease 0.3s both;
-      margin: 0.3rem 0 0;
+      animation: fadeUp 1s ease 0.4s both;
     }
 
     h2.name {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 7vw, 3.6rem);
+      font-size: clamp(2rem, 6vw, 3.4rem);
       font-weight: 700;
-      color: #ffffff;
+      color: #fff;
       text-shadow: 0 0 24px #f472b680;
       letter-spacing: 3px;
-      animation: fadeUp 0.8s ease 0.45s both;
-      margin: 0;
+      animation: fadeUp 1s ease 0.6s both;
     }
 
     .divider {
-      width: 72px;
+      width: 60px;
       height: 1px;
       background: linear-gradient(90deg, transparent, #f472b6, transparent);
-      animation: fadeUp 0.8s ease 0.6s both;
-      margin: 0.2rem 0 0.3rem;
+      animation: fadeUp 1s ease 0.7s both;
     }
 
-    /* Envelope */
-    .envelope-wrap {
-      width: 100%;
+    /* ── BIRTHDAY HERO ── */
+    #pg-hero {
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align: center;
+      gap: 1.4rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .open-btn {
+      margin-top: 0.5rem;
+      padding: 0.75rem 2.2rem;
+      border-radius: 50px;
+      border: 1px solid rgba(244,114,182,0.4);
+      background: rgba(244,114,182,0.08);
+      color: #f9a8d4;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      animation: fadeUp 1s ease 0.8s both;
+    }
+
+    .open-btn:hover {
+      background: rgba(244,114,182,0.18);
+      border-color: rgba(244,114,182,0.7);
+      transform: translateY(-2px);
+    }
+
+    .open-btn:active { transform: scale(0.97); }
+
+    /* ── MENU ── */
+    #pg-menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.4rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .menu-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #f9a8d4;
+      font-size: 0.82rem;
+      letter-spacing: 2.5px;
+      opacity: 0.75;
+    }
+
+    .menu-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      width: 100%;
+    }
+
+    .menu-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.18);
+      border-radius: 16px;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      text-align: left;
+    }
+
+    .menu-card:hover {
+      background: rgba(244,114,182,0.09);
+      border-color: rgba(244,114,182,0.45);
+      transform: translateX(4px);
+    }
+
+    .menu-card:active { transform: scale(0.98); }
+
+    .menu-card-icon {
+      font-size: 1.4rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(244,114,182,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .menu-card-text h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .menu-card-text p {
+      font-size: 0.75rem;
+      color: rgba(249,168,212,0.6);
+      letter-spacing: 0.5px;
+    }
+
+    .menu-card-arrow {
+      margin-left: auto;
+      color: rgba(244,114,182,0.4);
+      font-size: 1rem;
+    }
+
+    /* ── SUB-PAGES ── */
+    .sub-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.2rem;
+      width: 100%;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .back-btn {
+      align-self: flex-start;
+      background: none;
+      border: none;
+      color: rgba(249,168,212,0.6);
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
       gap: 0.4rem;
-      animation: fadeUp 0.8s ease 0.7s both;
+      padding: 0.3rem 0;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover { color: #f9a8d4; }
+    .envelope-wrap {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      animation: fadeUp 1s ease 0.8s both;
     }
 
     .env-title-label {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: #f9a8d4;
       letter-spacing: 3px;
       text-transform: uppercase;
       text-shadow: 0 0 14px #f472b6, 0 0 30px #db277780;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.9rem;
     }
 
     .envelope-outer {
       width: 100%;
-      max-width: 580px;
       position: relative;
       cursor: pointer;
       filter: drop-shadow(0 8px 32px rgba(244,114,182,0.35));
-      transition: filter 0.25s, transform 0.15s;
+      transition: filter 0.3s, transform 0.2s;
     }
 
     .envelope-outer:hover {
       filter: drop-shadow(0 12px 40px rgba(244,114,182,0.55));
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
 
-    .envelope-outer:active { transform: scale(0.99); }
+    .envelope-outer:active { transform: scale(0.97); }
 
     .env-body {
       width: 100%;
       background: linear-gradient(160deg, #2a0540 0%, #1a0030 60%, #3b0a60 100%);
       border: 1.5px solid rgba(244,114,182,0.35);
-      border-radius: 8px 8px 14px 14px;
+      border-radius: 6px 6px 14px 14px;
       position: relative;
       overflow: hidden;
-      height: min(28vw, 170px);
-      min-height: 140px;
+      height: 160px;
     }
 
+    /* left & right bottom triangle folds */
     .env-body::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 70px;
+      height: 80px;
       background: linear-gradient(135deg, #2a0540 50%, transparent 50%),
                   linear-gradient(225deg, #2a0540 50%, transparent 50%);
       background-size: 50% 100%;
       background-position: left, right;
       background-repeat: no-repeat;
       opacity: 0.7;
-      pointer-events: none;
     }
 
+    /* flap triangle */
     .env-flap {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -338,32 +453,28 @@
       z-index: 3;
     }
 
-    @media (max-width: 640px) {
-      .env-flap {
-        border-left-width: 50vw;
-        border-right-width: 50vw;
-        border-top-width: 16vw;
-      }
+    .envelope-outer.open .env-flap {
+      transform: rotateX(180deg);
     }
 
-    .envelope-outer.open .env-flap { transform: rotateX(180deg); }
-
+    /* wax seal */
     .env-seal {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 46px; height: 46px;
+      width: 46px;
+      height: 46px;
       background: radial-gradient(circle at 40% 35%, #f472b6, #9333ea);
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.3);
       display: flex;
-      align-items: center; justify-content: center;
+      align-items: center;
+      justify-content: center;
       font-size: 1.2rem;
       z-index: 4;
       box-shadow: 0 0 18px #f472b690;
       transition: opacity 0.3s, transform 0.3s;
-      user-select: none;
     }
 
     .envelope-outer.open .env-seal {
@@ -371,14 +482,14 @@
       transform: translate(-50%, -50%) scale(0.5);
     }
 
+    /* click hint */
     .env-hint {
-      font-size: 0.78rem;
-      color: rgba(249,168,212,0.75);
+      font-size: 0.72rem;
+      color: rgba(249,168,212,0.55);
       letter-spacing: 2px;
       text-transform: uppercase;
+      margin-top: 0.6rem;
       animation: pulse 2s ease-in-out infinite;
-      margin-top: 0.5rem;
-      user-select: none;
     }
 
     @keyframes pulse {
@@ -386,7 +497,7 @@
       50%      { opacity: 1; }
     }
 
-    /* Modal */
+    /* ── MODAL ── */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -396,10 +507,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.2rem;
+      padding: 1.5rem;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
 
     .modal-overlay.show {
@@ -410,7 +521,7 @@
     .modal-card {
       position: relative;
       width: 100%;
-      max-width: 560px;
+      max-width: 540px;
       max-height: 88vh;
       overflow-y: auto;
       scrollbar-width: none;
@@ -421,56 +532,69 @@
       border-radius: 20px;
       border: 1.5px solid rgba(244,114,182,0.4);
       box-shadow: 0 0 60px rgba(244,114,182,0.3);
-      transform: scale(0.94) translateY(20px);
-      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+      transform: scale(0.88) translateY(30px);
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
     }
 
     .modal-card::-webkit-scrollbar { display: none; }
 
-    .modal-overlay.show .modal-card { transform: scale(1) translateY(0); }
+    .modal-overlay.show .modal-card {
+      transform: scale(1) translateY(0);
+    }
 
-    .modal-inner { position: relative; z-index: 1; padding: 2.2rem 1.8rem 1.8rem; }
+    .modal-card::before { display: none; }
+
+    .modal-inner {
+      position: relative;
+      z-index: 1;
+      padding: 2.4rem 2rem 2rem;
+    }
 
     .modal-close {
       position: absolute;
-      top: 0.8rem; right: 0.8rem;
-      background: rgba(244,114,182,0.22);
+      top: 1rem;
+      right: 1rem;
+      background: rgba(244,114,182,0.2);
       border: 1px solid rgba(244,114,182,0.5);
       border-radius: 50%;
-      width: 36px; height: 36px;
-      color: #fff; font-size: 1.1rem;
+      width: 32px;
+      height: 32px;
+      color: #fff;
+      font-size: 1rem;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: background 0.2s;
       z-index: 2;
     }
 
-    .modal-close:hover { background: rgba(244,114,182,0.35); }
-    .modal-close:focus-visible { outline: 2px solid #f9a8d4; outline-offset: 2px; }
+    .modal-close:hover { background: rgba(244,114,182,0.4); }
 
     .modal-title {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       color: #f9a8d4;
       text-align: center;
       letter-spacing: 1.5px;
       text-shadow: 0 0 16px #f472b6;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
     }
 
     .modal-body {
-      font-size: 1rem;
-      line-height: 2;
+      font-size: 0.97rem;
+      line-height: 2.1;
       color: #ffffff;
       text-align: left;
-      letter-spacing: 0.2px;
     }
 
-    .modal-body p { margin: 0 0 1rem; }
+    .modal-body p {
+      margin-bottom: 1rem;
+    }
 
     .modal-footer {
-      margin-top: 1.2rem;
+      margin-top: 1.4rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1rem;
@@ -479,11 +603,9 @@
       text-shadow: 0 0 12px #f472b6;
     }
 
-    /* Gallery */
     .gallery-section {
       width: 100%;
-      animation: fadeUp 0.8s ease 0.85s both;
-      padding: 0 0.2rem;
+      animation: fadeUp 1s ease 1.1s both;
     }
 
     .gallery-section h3 {
@@ -491,11 +613,11 @@
       font-style: italic;
       font-weight: 400;
       color: #f9a8d4;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin: 0.4rem 0 0.8rem;
-      opacity: 0.9;
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
     }
 
     .gallery-grid {
@@ -509,75 +631,21 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 12px;
-      border: 1px solid rgba(244,114,182,0.2);
-      transition: filter 0.25s ease, transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(244,114,182,0.18);
+      transition: filter 0.4s ease, transform 0.3s ease, border-color 0.3s;
       cursor: pointer;
-      filter: blur(4px) brightness(0.9);
-      background: radial-gradient(ellipse at center, rgba(255,255,255,0.06), rgba(0,0,0,0.4));
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      filter: blur(6px) brightness(0.75);
     }
 
     .gallery-grid img:hover,
     .gallery-grid img:focus {
-      filter: blur(0) brightness(1);
-      transform: scale(1.03);
+      filter: blur(0px) brightness(1);
+      transform: scale(1.04);
       border-color: rgba(244,114,182,0.5);
-      box-shadow: 0 10px 26px rgba(244,114,182,0.18);
     }
-
-    .gallery-grid img:focus-visible { outline: 2px solid #f9a8d4; outline-offset: 2px; }
-
-    /* Player bar */
-    .player-bar {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(244,114,182,0.2);
-      border-radius: 14px;
-      padding: 0.85rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      animation: fadeUp 0.8s ease 0.9s both;
-      backdrop-filter: blur(2px);
-    }
-
-    .player-bar span {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: #f9a8d4;
-      font-size: 0.88rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      flex: 1;
-      text-align: left;
-      opacity: 0.9;
-    }
-
-    .player-btn {
-      background: linear-gradient(135deg, #db2777, #9333ea);
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      color: #fff;
-      font-size: 0.95rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
-      flex-shrink: 0;
-      box-shadow: 0 6px 16px rgba(147, 51, 234, 0.25);
-    }
-
-    .player-btn:hover  { opacity: 0.9; box-shadow: 0 8px 22px rgba(147, 51, 234, 0.35); }
-    .player-btn:active { transform: translateY(1px); }
-    .player-btn:focus-visible { outline: 2px solid #f9a8d4; outline-offset: 2px; }
-
-    /* Songs list */
     .songs-section {
       width: 100%;
-      animation: fadeUp 0.8s ease 1s both;
+      animation: fadeUp 1s ease 1s both;
     }
 
     .songs-section h3 {
@@ -585,52 +653,175 @@
       font-style: italic;
       font-weight: 400;
       color: #f9a8d4;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin: 1rem 0 0.8rem;
-      opacity: 0.9;
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
     }
 
-    .song-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .song-list { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .song-item {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(244,114,182,0.18);
-      border-radius: 12px;
-      padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.12);
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-size: 0.92rem;
-      color: #f1e6f6;
-      transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+      font-size: 0.85rem;
+      color: #e8d5f0;
+      transition: background 0.25s, border-color 0.25s;
       animation: fadeUp 0.5s ease both;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.22);
     }
 
     .song-item::before {
       content: '♪';
       color: #f472b6;
-      opacity: 0.8;
-      font-size: 1rem;
+      opacity: 0.6;
+      font-size: 0.9rem;
     }
 
     .song-item:hover {
       background: rgba(244,114,182,0.08);
-      border-color: rgba(244,114,182,0.35);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 26px rgba(244,114,182,0.18);
+      border-color: rgba(244,114,182,0.3);
     }
 
-    /* Flower */
+    .music-section {
+      width: 100%;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+
+    .music-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.15);
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+    }
+
+    .music-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #f9a8d4;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      opacity: 0.85;
+    }
+
+    .music-card iframe {
+      border-radius: 10px;
+      width: 100%;
+      border: none;
+    }
+
+    /* music player bar */
+
+    .hearts {
+      font-size: 1.1rem;
+      letter-spacing: 10px;
+      opacity: 0.5;
+      animation: fadeUp 1s ease 1.4s both;
+    }
+
+    /* ── SONG CONFIRM ── */
+    .song-confirm {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(15, 5, 30, 0.95);
+      border: 1px solid rgba(244,114,182,0.35);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      z-index: 200;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(244,114,182,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      min-width: 260px;
+      max-width: 90vw;
+    }
+
+    .song-confirm.show {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .song-confirm p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: #f9a8d4;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .song-confirm-title {
+      font-size: 0.8rem !important;
+      color: #fff !important;
+      font-style: normal !important;
+      opacity: 0.75;
+    }
+
+    .song-confirm-btns {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .song-confirm-btns button {
+      padding: 0.4rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      border: none;
+    }
+
+    .song-confirm-btns button:active { transform: scale(0.96); }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #db2777, #9333ea);
+      color: #fff;
+    }
+
+    .btn-no {
+      background: rgba(255,255,255,0.08);
+      color: #f9a8d4;
+      border: 1px solid rgba(244,114,182,0.25) !important;
+    }
+
+    .btn-yes:hover { opacity: 0.85; }
+    .btn-no:hover  { opacity: 0.75; }
+
+    .floater {
+      position: fixed;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(360deg) scale(1);  opacity: 0; }
+    }
+
+    /* ── FLOWER ── */
     .flower-section {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
-      animation: fadeUp 0.8s ease 1.1s both;
+      gap: 0.7rem;
+      animation: fadeUp 1s ease 1.3s both;
     }
 
     .flower-label {
@@ -638,46 +829,47 @@
       font-style: italic;
       font-weight: 400;
       color: #f9a8d4;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      opacity: 0.9;
+      opacity: 0.85;
     }
 
     .flower-hint {
-      font-size: 0.78rem;
-      color: rgba(249,168,212,0.8);
+      font-size: 0.7rem;
+      color: rgba(249,168,212,0.5);
       letter-spacing: 2px;
       text-transform: uppercase;
       animation: pulse 2s ease-in-out infinite;
-      margin: 0.2rem 0 0.4rem;
     }
 
     .flower-wrap {
       position: relative;
-      width: min(320px, 70vw);
-      height: min(320px, 70vw);
+      width: 280px;
+      height: 280px;
       cursor: pointer;
-      transition: transform 0.25s ease;
-      touch-action: manipulation;
+      transition: transform 0.3s ease;
     }
 
-    .flower-wrap:hover { transform: scale(1.02); }
+    .flower-wrap:hover { transform: scale(1.03); }
 
+    /* center bud */
     .flower-center {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 72px; height: 72px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       background: radial-gradient(circle at 40% 35%, #fce7f3, #db2777);
-      border: 2.5px solid rgba(255,255,255,0.35);
+      border: 2.5px solid rgba(255,255,255,0.3);
       box-shadow: 0 0 22px #f472b6aa, 0 0 50px #db277740;
       z-index: 5;
-      transition: transform 0.35s ease, box-shadow 0.35s;
-      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.4s ease, box-shadow 0.4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1.6rem;
-      user-select: none;
     }
 
     .flower-wrap.bloomed .flower-center {
@@ -685,46 +877,50 @@
       box-shadow: 0 0 32px #f472b6, 0 0 70px #db277760;
     }
 
+    /* petals */
     .petal {
       position: absolute;
       top: 50%; left: 50%;
-      width: 104px; height: 104px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       overflow: hidden;
-      border: 2.5px solid rgba(255,255,255,0.22);
+      border: 2.5px solid rgba(255,255,255,0.2);
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
       transform-origin: center center;
-      transition: transform 0.6s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease;
+      transition: transform 0.7s cubic-bezier(.34,1.56,.64,1), opacity 0.5s ease;
       opacity: 0;
       z-index: 2;
-      background: #1a0533;
     }
 
     .petal img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       pointer-events: none;
-      filter: saturate(1.05) contrast(1.02);
     }
 
+    /* closed — stacked at center */
     .petal-1 { transform: translate(-50%, -50%) rotate(0deg)   translateY(0px) scale(0.15); }
     .petal-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(0px) scale(0.15); }
     .petal-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(0px) scale(0.15); }
 
-    .flower-wrap.bloomed .petal { opacity: 1; }
-    .flower-wrap.bloomed .petal-1 { transform: translate(-50%, -50%) rotate(0deg)   translateY(-98px) scale(1); transition-delay: 0s; }
-    .flower-wrap.bloomed .petal-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(-98px) scale(1); transition-delay: 0.08s; }
-    .flower-wrap.bloomed .petal-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(-98px) scale(1); transition-delay: 0.16s; }
+    /* bloomed — spread out with slight overlap at center */
+    .flower-wrap.bloomed .petal           { opacity: 1; }
+    .flower-wrap.bloomed .petal-1 { transform: translate(-50%, -50%) rotate(0deg)   translateY(-95px) scale(1); transition-delay: 0s; }
+    .flower-wrap.bloomed .petal-2 { transform: translate(-50%, -50%) rotate(120deg) translateY(-95px) scale(1); transition-delay: 0.08s; }
+    .flower-wrap.bloomed .petal-3 { transform: translate(-50%, -50%) rotate(240deg) translateY(-95px) scale(1); transition-delay: 0.16s; }
 
+    /* decorative ring around flower when bloomed */
     .flower-ring {
       position: absolute;
       top: 50%; left: 50%;
-      width: min(260px, 58vw);
-      height: min(260px, 58vw);
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
       border: 1px solid rgba(244,114,182,0);
       transform: translate(-50%, -50%) scale(0.6);
-      transition: border-color 0.5s ease 0.35s, transform 0.5s ease 0.35s, box-shadow 0.5s ease 0.35s;
+      transition: border-color 0.6s ease 0.4s, transform 0.6s ease 0.4s, box-shadow 0.6s ease 0.4s;
       z-index: 1;
       pointer-events: none;
     }
@@ -735,51 +931,36 @@
       box-shadow: 0 0 30px rgba(244,114,182,0.1);
     }
 
+    /* stem */
     .flower-stem {
       position: absolute;
       bottom: 8px; left: 50%;
       transform: translateX(-50%);
-      width: 3px; height: 0;
+      width: 3px;
+      height: 0;
       background: linear-gradient(to bottom, #86efac88, #16653488);
       border-radius: 2px;
-      transition: height 0.45s ease 0.28s;
+      transition: height 0.5s ease 0.3s;
       z-index: 1;
     }
 
-    .flower-wrap.bloomed .flower-stem { height: 48px; }
-
-    .hearts {
-      font-size: 1.1rem;
-      letter-spacing: 10px;
-      opacity: 0.6;
-      animation: fadeUp 0.8s ease 1.2s both;
-      user-select: none;
-    }
-
-    .floater {
-      position: fixed;
-      animation: floatUp linear forwards;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    @keyframes floatUp {
-      0%   { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0.85; }
-      100% { transform: translateY(-10vh) rotate(360deg) scale(1);  opacity: 0; }
+    .flower-wrap.bloomed .flower-stem {
+      height: 46px;
     }
   </style>
 </head>
 <body>
-  <canvas id="particles" aria-hidden="true"></canvas>
 
-  <!-- Background music -->
-  <audio id="bgMusic" src="backgroundmusic.mp3" preload="auto" loop aria-label="Background music"></audio>
+  <canvas id="particles"></canvas>
 
-  <!-- Locked state -->
-  <div id="locked" role="region" aria-labelledby="countdown">
-    <div class="logo" aria-hidden="true">
-      <div class="logo-ring" aria-hidden="true"></div>
-      <svg viewBox="0 0 100 100" xmlns="[w3.org](http://www.w3.org/2000/svg)" role="img" aria-label="Heart crest">
+  <!-- background music (same folder as index.html) -->
+  <audio id="bgMusic" src="backgroundmusic.mp3" loop preload="auto"></audio>
+
+  <!-- Locked -->
+  <div id="locked">
+    <div class="logo">
+      <div class="logo-ring"></div>
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <radialGradient id="hg" cx="50%" cy="40%" r="60%">
             <stop offset="0%" stop-color="#f9a8d4"/>
@@ -792,159 +973,177 @@
       </svg>
     </div>
 
-    <div id="countdown" aria-live="polite">Loading...</div>
+    <div id="countdown">Loading...</div>
 
     <div class="pw-section">
-      <label for="pw-input">Enter Password</label>
+      <label>Enter Password</label>
       <div class="pw-row">
-        <input type="password" id="pw-input" placeholder="password" maxlength="30" autocomplete="off" inputmode="text" aria-describedby="pw-error" />
-        <button id="unlockBtn" type="button">Unlock</button>
+        <input type="password" id="pw-input" placeholder="password" maxlength="30" />
+        <button onclick="checkPassword()">Unlock</button>
       </div>
-      <div id="pw-error" role="status" aria-live="assertive"></div>
+      <div id="pw-error"></div>
     </div>
   </div>
 
-  <!-- Birthday state -->
-  <div id="birthday" role="main" aria-labelledby="bday-title">
-    <svg class="bday-logo" viewBox="0 0 100 100" xmlns="[w3.org](http://www.w3.org/2000/svg)" role="img" aria-label="Heart crest">
-      <defs>
-        <radialGradient id="hg2" cx="50%" cy="40%" r="60%">
-          <stop offset="0%" stop-color="#fce7f3"/>
-          <stop offset="100%" stop-color="#f472b6"/>
-        </radialGradient>
-      </defs>
-      <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z" fill="url(#hg2)"/>
-    </svg>
+  <!-- Birthday -->
+  <div id="birthday">
 
-    <div class="emoji-burst" aria-hidden="true">✦  ✦  ✦</div>
-
-    <h1 class="bday-title" id="bday-title">Happy Birthday,</h1>
-    <h2 class="name">Krass</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <!-- Envelope -->
-    <div class="envelope-wrap">
-      <div class="env-title-label">✦ Message ✦</div>
-      <div class="envelope-outer" id="envelope" tabindex="0" role="button" aria-label="Open birthday letter">
-        <div class="env-flap" aria-hidden="true"></div>
-        <div class="env-seal" aria-hidden="true">💌</div>
-        <div class="env-body" aria-hidden="true"></div>
-      </div>
-      <p class="env-hint">✦ click to open ✦</p>
+    <!-- PAGE 1: Hero -->
+    <div id="pg-hero">
+      <svg class="bday-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hg2" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#fce7f3"/>
+            <stop offset="100%" stop-color="#f472b6"/>
+          </radialGradient>
+        </defs>
+        <path d="M50 80 C20 55 10 42 10 30 A20 20 0 0 1 50 22 A20 20 0 0 1 90 30 C90 42 80 55 50 80Z" fill="url(#hg2)"/>
+      </svg>
+      <div class="emoji-burst">✦  ✦  ✦</div>
+      <h1 class="bday-title">Happy Birthday,</h1>
+      <h2 class="name">Krass</h2>
+      <div class="divider"></div>
+      <button class="open-btn" onclick="showMenu()">Open ✦</button>
     </div>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="letterModal" aria-modal="true" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalBody">
-      <div class="modal-card" role="document">
-        <button class="modal-close" id="modalCloseBtn" type="button" aria-label="Close letter">✕</button>
-        <div class="modal-inner">
-          <div class="modal-title" id="modalTitle">Sa Pag-ikot ng Mundo</div>
-          <div class="modal-body" id="modalBody">
-            <p>
-              Habang binibilang ng mundo ang mga segundo,<br/>
-              May isang pangalang tahimik na nagmamarka sa puso ko.<br/>
-              Hindi naman lingid sa kaalaman ng sarili kong tadhana,<br/>
-              Na sa dinami-rami ng tao, sa iyo ako unang natulala.
-            </p>
-            <p>
-              Oo, crush kita o baka hanggang ngayon nga.<br/>
-              Isang paghangang nagsimula sa simpleng pagsubaybay sa iyong mga tawa't luha<br/>
-              Sa kung paano sumasayaw ang liwanag sa iyong mga mata,<br/>
-              At kung paano mo ginagawang espesyal ang bawat ordinaryong umaga.
-            </p>
-            <p>
-              Ngayong araw, humihinto ang mundo para sa iyo.<br/>
-              Ihipan mo ang mga kandila ng nakalipas na taon,<br/>
-              At salubungin ang bagong yugto nang may buong tapang at layon.
-            </p>
-            <p>
-              Saksi ang tula na 'to sa ganda ng iyong pag-iral,<br/>
-              Na ang isang katulad mo ay labis na nagbibigay-buhay sa salitang "mahal."
-            </p>
-            <p>
-              Kaya sa araw na ito, Sofia Nathalie, ang tanging hiling ko lang,<br/>
-              Sana'y mapuno ng ngiti ang iyong mga labi, hindi lang ngayon, kundi sa walang katapusan.
-            </p>
-            <p>
-              Salamat sa ligaya na dala mo, kahit sa malayo lang kita kayang titigan.
-            </p>
+    <!-- PAGE 2: Menu -->
+    <div id="pg-menu">
+      <h1 class="bday-title">What would you like to see?</h1>
+      <div class="divider"></div>
+      <div class="menu-cards">
+        <div class="menu-card" onclick="showPage('pg-message')">
+          <div class="menu-card-icon">✉</div>
+          <div class="menu-card-text">
+            <h4>Message</h4>
+            <p>A letter written for you</p>
           </div>
-          <div class="modal-footer">
-            Maligayang kaarawan, aking hinahangaan.<br/>
-            Maligayang kaarawan sa iyo, Sofia Nathalie. ✦
+          <span class="menu-card-arrow">›</span>
+        </div>
+        <div class="menu-card" onclick="showPage('pg-pictures')">
+          <div class="menu-card-icon">✦</div>
+          <div class="menu-card-text">
+            <h4>Pictures</h4>
+            <p>Beauty of Krass</p>
           </div>
+          <span class="menu-card-arrow">›</span>
+        </div>
+        <div class="menu-card" onclick="showPage('pg-playlist')">
+          <div class="menu-card-icon">♪</div>
+          <div class="menu-card-text">
+            <h4>Playlist</h4>
+            <p>Songs that remind me of you</p>
+          </div>
+          <span class="menu-card-arrow">›</span>
         </div>
       </div>
     </div>
 
-    <!-- Gallery -->
-    <div class="gallery-section">
-      <h3>Beauty of Krass</h3>
-      <div class="gallery-grid">
-        <img src="photo1.jpg" alt="Krass photo 1" onerror="this.style.filter='none';this.style.background='#12031f';" />
-        <img src="photo2.jpg" alt="Krass photo 2" onerror="this.style.filter='none';this.style.background='#12031f';" />
-        <img src="photo3.jpg" alt="Krass photo 3" onerror="this.style.filter='none';this.style.background='#12031f';" />
+    <!-- PAGE 3a: Message -->
+    <div id="pg-message" class="sub-page">
+      <button class="back-btn" onclick="showMenu()">‹ Back</button>
+      <div class="envelope-wrap">
+        <div class="env-title-label">✦ Message ✦</div>
+        <div class="envelope-outer" id="envelope" onclick="openLetter()">
+          <div class="env-flap"></div>
+          <div class="env-seal">💌</div>
+          <div class="env-body"></div>
+        </div>
+        <p class="env-hint">✦ click to open ✦</p>
       </div>
     </div>
 
-    <!-- Music player -->
-    <div class="player-bar">
-      <span>♪ Background Music</span>
-      <button class="player-btn" id="toggleBtn" type="button" aria-label="Toggle music">⏸</button>
-    </div>
-
-    <!-- Playlist -->
-    <div class="songs-section">
-      <h3>Playlist</h3>
-      <div class="song-list">
-        <div class="song-item" style="animation-delay:.1s">Ceilings — Lizzy McAlpine</div>
-        <div class="song-item" style="animation-delay:.2s">To The Bone — Pamungkas</div>
-        <div class="song-item" style="animation-delay:.3s">Doubt — Conan Gray</div>
-        <div class="song-item" style="animation-delay:.4s">Scott Street — Phoebe Bridgers</div>
-        <div class="song-item" style="animation-delay:.5s">Young and Beautiful — Lana Del Rey</div>
+    <!-- PAGE 3b: Pictures -->
+    <div id="pg-pictures" class="sub-page">
+      <button class="back-btn" onclick="showMenu()">‹ Back</button>
+      <div class="gallery-section">
+        <h3>Beauty of Krass</h3>
+        <div class="gallery-grid">
+          <img src="photo1.jpg" alt="Krass" />
+          <img src="photo2.jpg" alt="Krass" />
+          <img src="photo3.jpg" alt="Krass" />
+        </div>
+      </div>
+      <div class="flower-section">
+        <div class="flower-label">✦ For You ✦</div>
+        <div class="flower-wrap" id="flower" onclick="toggleFlower()">
+          <div class="flower-ring"></div>
+          <div class="flower-stem"></div>
+          <div class="petal petal-1"><img src="photo1.jpg" alt=""/></div>
+          <div class="petal petal-2"><img src="photo2.jpg" alt=""/></div>
+          <div class="petal petal-3"><img src="photo3.jpg" alt=""/></div>
+          <div class="flower-center">✿</div>
+        </div>
+        <p class="flower-hint">✦ click the flower ✦</p>
       </div>
     </div>
 
-    <!-- Flower -->
-    <div class="flower-section">
-      <div class="flower-label">✦ For You ✦</div>
-      <div class="flower-wrap" id="flower" role="button" tabindex="0" aria-label="Bloom the flower">
-        <div class="flower-ring" aria-hidden="true"></div>
-        <div class="flower-stem" aria-hidden="true"></div>
-        <div class="petal petal-1"><img src="photo1.jpg" alt="" /></div>
-        <div class="petal petal-2"><img src="photo2.jpg" alt="" /></div>
-        <div class="petal petal-3"><img src="photo3.jpg" alt="" /></div>
-        <div class="flower-center" aria-hidden="true">✿</div>
+    <!-- PAGE 3c: Playlist -->
+    <div id="pg-playlist" class="sub-page">
+      <button class="back-btn" onclick="showMenu()">‹ Back</button>
+      <div class="songs-section">
+        <h3>Playlist</h3>
+        <div class="song-list">
+          <div class="song-item" style="animation-delay:.1s" onclick="playSong('https://www.youtube.com/watch?v=tZHWwFovhpc','Ceilings — Lizzy McAlpine')">Ceilings — Lizzy McAlpine</div>
+          <div class="song-item" style="animation-delay:.2s" onclick="playSong('https://www.youtube.com/watch?v=7dlvNGFtQQU','To The Bone — Pamungkas')">To The Bone — Pamungkas</div>
+          <div class="song-item" style="animation-delay:.3s" onclick="playSong('https://www.youtube.com/watch?v=NnDMqR5ECEY','Doubt — Conan Gray')">Doubt — Conan Gray</div>
+          <div class="song-item" style="animation-delay:.4s" onclick="playSong('https://www.youtube.com/watch?v=4CRHLbvwOMU','Scott Street — Phoebe Bridgers')">Scott Street — Phoebe Bridgers</div>
+          <div class="song-item" style="animation-delay:.5s" onclick="playSong('https://www.youtube.com/watch?v=0eSGFKfVZFI','Young and Beautiful — Lana Del Rey')">Young and Beautiful — Lana Del Rey</div>
+        </div>
       </div>
-      <p class="flower-hint">✦ click the flower ✦</p>
     </div>
 
-    <div class="hearts" aria-hidden="true">♡ &nbsp; ♡ &nbsp; ♡</div>
+    <!-- Letter Modal -->
+    <div class="modal-overlay" id="letterModal" onclick="closeLetter(event)">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeLetter()">✕</button>
+        <div class="modal-inner">
+          <div class="modal-title">Sa Pag-ikot ng Mundo</div>
+          <div class="modal-body">
+            <p>Habang binibilang ng mundo ang mga segundo,<br/>May isang pangalang tahimik na nagmamarka sa puso ko.<br/>Hindi naman lingid sa kaalaman ng sarili kong tadhana,<br/>Na sa dinami-rami ng tao, sa iyo ako unang natulala.</p>
+            <p>Oo, crush kita o baka hanggang ngayon nga.<br/>Isang paghangang nagsimula sa simpleng pagsubaybay sa iyong mga tawa't luha<br/>Sa kung paano sumasayaw ang liwanag sa iyong mga mata,<br/>At kung paano mo ginagawang espesyal ang bawat ordinaryong umaga.</p>
+            <p>Ngayong araw, humihinto ang mundo para sa iyo.<br/>Ihipan mo ang mga kandila ng nakalipas na taon,<br/>At salubungin ang bagong yugto nang may buong tapang at layon.</p>
+            <p>Saksi ang tula na 'to sa ganda ng iyong pag-iral,<br/>Na ang isang katulad mo ay labis na nagbibigay-buhay sa salitang "mahal."</p>
+            <p>Kaya sa araw na ito, Sofia Nathalie, ang tanging hiling ko lang,<br/>Sana'y mapuno ng ngiti ang iyong mga labi, hindi lang ngayon, kundi sa walang katapusan.</p>
+            <p>Salamat sa ligaya na dala mo, kahit sa malayo lang kita kayang titigan.</p>
+          </div>
+          <div class="modal-footer">Maligayang kaarawan, aking hinahangaan.<br/>Maligayang kaarawan sa iyo, Sofia Nathalie. ✦</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Song confirm -->
+    <div class="song-confirm" id="songConfirm">
+      <p>Want to listen?</p>
+      <p class="song-confirm-title" id="songConfirmTitle"></p>
+      <div class="song-confirm-btns">
+        <button class="btn-yes" onclick="goToSong()">Yes, play it ♪</button>
+        <button class="btn-no" onclick="dismissSong()">Maybe later</button>
+      </div>
+    </div>
+
+    <div class="hearts">♡ &nbsp; ♡ &nbsp; ♡</div>
+
   </div>
 
   <script>
-    /* Canvas particles */
+    /* particles */
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
 
     function resizeCanvas() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas, { passive: true });
+    window.addEventListener('resize', resizeCanvas);
 
     const particles = Array.from({ length: 120 }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
       r: Math.random() * 1.5 + 0.4,
       dx: (Math.random() - 0.5) * 0.3,
       dy: (Math.random() - 0.5) * 0.3,
-      alpha: Math.random() * 0.5 + 0.15
+      alpha: Math.random() * 0.5 + 0.15,
     }));
 
     (function animateParticles() {
@@ -955,13 +1154,13 @@
         ctx.fillStyle = `rgba(244,114,182,${p.alpha})`;
         ctx.fill();
         p.x += p.dx; p.y += p.dy;
-        if (p.x < 0 || p.x > window.innerWidth)  p.dx *= -1;
-        if (p.y < 0 || p.y > window.innerHeight) p.dy *= -1;
+        if (p.x < 0 || p.x > canvas.width)  p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
       });
       requestAnimationFrame(animateParticles);
     })();
 
-    /* Countdown: DO NOT CHANGE PASSWORD OR COUNTDOWN LOGIC */
+    /* countdown */
     function isBirthday() {
       const n = new Date();
       return n.getMonth() === 7 && n.getDate() === 22;
@@ -980,104 +1179,64 @@
       document.getElementById('countdown').textContent = `${d}d  ${h}h  ${m}m  ${s}s`;
     }
 
-    /* Show birthday */
+    /* show birthday */
     function showBirthday() {
       document.getElementById('locked').style.display = 'none';
       const bday = document.getElementById('birthday');
       bday.style.display = 'flex';
       document.body.classList.add('unlocked');
-
+      showOnly('pg-hero');
       const music = document.getElementById('bgMusic');
-      const toggleBtn = document.getElementById('toggleBtn');
-
-      // Attempt autoplay; if blocked, switch icon to play
       music.volume = 0.5;
-      music.play().then(() => {
-        toggleBtn.textContent = '⏸';
-        toggleBtn.setAttribute('aria-label', 'Pause music');
-      }).catch(() => {
-        toggleBtn.textContent = '▶';
-        toggleBtn.setAttribute('aria-label', 'Play music');
-      });
-
+      music.play().catch(() => {});
       spawnHearts();
     }
 
-    /* Music toggle */
-    function toggleMusic() {
-      const music = document.getElementById('bgMusic');
-      const btn   = document.getElementById('toggleBtn');
-      if (music.paused) {
-        music.play().then(() => {
-          btn.textContent = '⏸';
-          btn.setAttribute('aria-label', 'Pause music');
-        }).catch(() => {
-          // ignore errors
-        });
-      } else {
-        music.pause();
-        btn.textContent = '▶';
-        btn.setAttribute('aria-label', 'Play music');
+    /* navigation */
+    const allPages = ['pg-hero','pg-menu','pg-message','pg-pictures','pg-playlist'];
+
+    function showOnly(id) {
+      allPages.forEach(p => {
+        const el = document.getElementById(p);
+        if (el) el.style.display = 'none';
+      });
+      const target = document.getElementById(id);
+      if (target) {
+        target.style.display = 'flex';
+        target.style.animation = 'none';
+        void target.offsetWidth;
+        target.style.animation = 'fadeUp 0.5s ease both';
       }
     }
 
-    document.getElementById('toggleBtn').addEventListener('click', toggleMusic);
+    function showMenu() {
+      // close envelope if open
+      const env = document.getElementById('envelope');
+      if (env) env.classList.remove('open');
+      document.getElementById('letterModal').classList.remove('show');
+      showOnly('pg-menu');
+    }
 
-    /* Envelope / modal with keyboard support */
-    const envelope = document.getElementById('envelope');
-    const letterModal = document.getElementById('letterModal');
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    function showPage(id) { showOnly(id); }
 
+    /* music toggle */    /* envelope / modal */
     function openLetter() {
-      envelope.classList.add('open');
+      const env = document.getElementById('envelope');
+      env.classList.add('open');
       setTimeout(() => {
-        letterModal.classList.add('show');
-        // Focus trap start: focus close button
-        modalCloseBtn.focus();
-        document.addEventListener('keydown', escHandler);
-      }, 300);
-    }
-
-    function escHandler(e) {
-      if (e.key === 'Escape') closeLetter();
-      if (e.key === 'Tab') trapFocus(e);
-    }
-
-    function trapFocus(e) {
-      const focusable = letterModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-      const list = Array.from(focusable).filter(el => !el.hasAttribute('disabled'));
-      if (list.length === 0) return;
-      const first = list[0];
-      const last = list[list.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault(); last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault(); first.focus();
-      }
+        document.getElementById('letterModal').classList.add('show');
+      }, 350);
     }
 
     function closeLetter(e) {
-      // Allow click outside card to close
-      if (e && e.target && e.currentTarget && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
-      letterModal.classList.remove('show');
+      if (e && e.target !== document.getElementById('letterModal')) return;
+      document.getElementById('letterModal').classList.remove('show');
       setTimeout(() => {
-        envelope.classList.remove('open');
-      }, 250);
-      document.removeEventListener('keydown', escHandler);
-      // Return focus to envelope for accessibility
-      envelope.focus();
+        document.getElementById('envelope').classList.remove('open');
+      }, 300);
     }
 
-    envelope.addEventListener('click', openLetter);
-    envelope.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault(); openLetter();
-      }
-    });
-    letterModal.addEventListener('click', closeLetter);
-    modalCloseBtn.addEventListener('click', closeLetter);
-
-    /* Password: DO NOT CHANGE PASSWORD VALUE */
+    /* password */
     function checkPassword() {
       const val   = document.getElementById('pw-input').value;
       const error = document.getElementById('pw-error');
@@ -1086,66 +1245,67 @@
       } else {
         error.textContent = 'Mali ang password. Try ulit! 🙈';
         error.classList.remove('shake');
-        void error.offsetWidth; // reflow to restart animation
+        void error.offsetWidth;
         error.classList.add('shake');
         document.getElementById('pw-input').value = '';
       }
     }
 
-    document.getElementById('unlockBtn').addEventListener('click', checkPassword);
     document.getElementById('pw-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') checkPassword();
     });
 
-    /* Flower toggle (click + keyboard) */
+    /* song confirm */
+    let currentSongUrl = '';
+    let songDismissTimer = null;
+
+    function playSong(url, title) {
+      currentSongUrl = url;
+      document.getElementById('songConfirmTitle').textContent = title;
+      const el = document.getElementById('songConfirm');
+      el.classList.add('show');
+      clearTimeout(songDismissTimer);
+      songDismissTimer = setTimeout(dismissSong, 6000);
+    }
+
+    function goToSong() {
+      dismissSong();
+      window.open(currentSongUrl, '_blank');
+    }
+
+    function dismissSong() {
+      document.getElementById('songConfirm').classList.remove('show');
+      clearTimeout(songDismissTimer);
+    }
+
+    /* flower toggle */
     function toggleFlower() {
       document.getElementById('flower').classList.toggle('bloomed');
     }
-    const flower = document.getElementById('flower');
-    flower.addEventListener('click', toggleFlower);
-    flower.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault(); toggleFlower();
-      }
-    });
 
-    /* Floating hearts with jittered spawn; pause when tab hidden */
-    let heartTimer;
-    const emojis = ['💗','💕','🌸','🎀','✨','💖','🌹','🎶'];
-
+    /* floating hearts */
     function spawnHearts() {
-      clearInterval(heartTimer);
-      heartTimer = setInterval(() => {
+      const emojis = ['💗','💕','🌸','🎀','✨','💖','🌹','🎶'];
+      setInterval(() => {
         const el = document.createElement('div');
-        el.className = 'floater';
+        el.classList.add('floater');
         el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = Math.random() * 100 + 'vw';
+        el.style.left   = Math.random() * 100 + 'vw';
         el.style.bottom = '-40px';
         el.style.animationDuration = (5 + Math.random() * 6) + 's';
         el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 11000);
-      }, 520);
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) clearInterval(heartTimer);
-        else spawnHearts();
-      }, { once: true });
+      }, 500);
     }
 
-    /* Init */
+    /* init */
     if (isBirthday()) {
       showBirthday();
     } else {
       updateCountdown();
       setInterval(updateCountdown, 1000);
     }
-
-    /* Basic asset guard: if audio fails, update button */
-    document.getElementById('bgMusic').addEventListener('error', () => {
-      const btn = document.getElementById('toggleBtn');
-      btn.textContent = '▶';
-      btn.setAttribute('aria-label', 'Play music');
-    });
   </script>
 </body>
 </html>
