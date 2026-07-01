@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0a0a0a" />
   <title>pyang</title>
   <link rel="icon" type="image/jpeg" href="photo3.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -10,16 +13,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
   <style>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
       font-family: 'Lato', sans-serif;
       background: #0a0a0a;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     #particles {
@@ -167,7 +173,9 @@
       position: relative;
       z-index: 1;
       max-height: 100vh;
+      max-height: 100dvh;
       overflow-y: auto;
+      overflow-x: hidden;
       scrollbar-width: none;
       width: 100%;
       max-width: 560px;
@@ -404,6 +412,14 @@
     }
 
     .open-btn:active { transform: scale(0.97); }
+
+    .cake-hint {
+      font-size: 0.7rem;
+      color: rgba(249,168,212,0.5);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: pulse 2s ease-in-out infinite;
+    }
 
     /* ── MENU ── */
     #pg-menu {
@@ -1079,14 +1095,105 @@
     .flower-wrap.bloomed .flower-stem {
       height: 46px;
     }
-  </style>
+    /* ── RESPONSIVE ── */
+
+    /* touch devices — replace hover-only blur reveal with tap */
+    @media (hover: none) {
+      .gallery-grid img { filter: blur(0px) brightness(1); }
+      .gallery-grid img:active { transform: scale(0.97); }
+      .menu-card:hover { transform: none; }
+      .menu-card:active { background: rgba(244,114,182,0.09); border-color: rgba(244,114,182,0.45); transform: scale(0.98); }
+      .envelope-outer:hover { transform: none; filter: drop-shadow(0 8px 32px rgba(244,114,182,0.35)); }
+      .flower-wrap:hover { transform: none; }
+    }
+
+    /* small phones (≤380px) */
+    @media (max-width: 380px) {
+      #locked { padding: 1.8rem 1.2rem; gap: 1.2rem; }
+      .logo { width: 80px; height: 80px; }
+      #countdown { font-size: 1.4rem; letter-spacing: 2px; }
+      .pw-section input[type="password"] { width: 150px; font-size: 0.9rem; }
+      .cake-body { width: 140px; }
+      .cake-body .cake-photo { height: 110px; }
+      .cake-plate { width: 158px; }
+      h2.name { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+      .flower-wrap { width: 220px; height: 220px; }
+      .flower-wrap.bloomed .petal-1,
+      .flower-wrap.bloomed .petal-2,
+      .flower-wrap.bloomed .petal-3 { transform: translate(-50%, -50%) rotate(var(--r)) translateY(-75px) scale(1); }
+      .flower-wrap.bloomed .petal-1 { --r: 0deg; }
+      .flower-wrap.bloomed .petal-2 { --r: 120deg; }
+      .flower-wrap.bloomed .petal-3 { --r: 240deg; }
+      .flower-ring { width: 180px; height: 180px; }
+      .modal-inner { padding: 2rem 1.2rem 1.5rem; }
+      .modal-body { font-size: 0.88rem; }
+      .env-flap { border-left-width: calc(50vw - 1.2rem); border-right-width: calc(50vw - 1.2rem); }
+    }
+
+    /* phones (381px – 600px) */
+    @media (min-width: 381px) and (max-width: 600px) {
+      #birthday { padding: 1.8rem 1.2rem 2.5rem; }
+      .cake-body { width: 160px; }
+      .cake-plate { width: 178px; }
+      .env-flap { border-left-width: calc(50vw - 1.2rem); border-right-width: calc(50vw - 1.2rem); }
+    }
+
+    /* tablets (601px – 1024px) */
+    @media (min-width: 601px) and (max-width: 1024px) {
+      #birthday { max-width: 600px; padding: 2.5rem 2rem 3rem; }
+      .cake-body { width: 200px; }
+      .cake-photo { height: 158px; }
+      .cake-plate { width: 220px; }
+      .flower-wrap { width: 300px; height: 300px; }
+      .flower-wrap.bloomed .petal-1,
+      .flower-wrap.bloomed .petal-2,
+      .flower-wrap.bloomed .petal-3 { transform: translate(-50%, -50%) rotate(var(--r)) translateY(-105px) scale(1); }
+      .flower-wrap.bloomed .petal-1 { --r: 0deg; }
+      .flower-wrap.bloomed .petal-2 { --r: 120deg; }
+      .flower-wrap.bloomed .petal-3 { --r: 240deg; }
+      .flower-ring { width: 250px; height: 250px; }
+      .gallery-grid { gap: 0.8rem; }
+      .modal-card { max-width: 560px; }
+    }
+
+    /* laptop & desktop (≥1025px) */
+    @media (min-width: 1025px) {
+      body { align-items: center; }
+      #birthday { max-width: 620px; padding: 2.5rem 2rem 3rem; }
+      .cake-body { width: 200px; }
+      .cake-photo { height: 158px; }
+      .cake-plate { width: 220px; }
+      .flower-wrap { width: 320px; height: 320px; }
+      .flower-wrap.bloomed .petal-1,
+      .flower-wrap.bloomed .petal-2,
+      .flower-wrap.bloomed .petal-3 { transform: translate(-50%, -50%) rotate(var(--r)) translateY(-110px) scale(1); }
+      .flower-wrap.bloomed .petal-1 { --r: 0deg; }
+      .flower-wrap.bloomed .petal-2 { --r: 120deg; }
+      .flower-wrap.bloomed .petal-3 { --r: 240deg; }
+      .flower-ring { width: 270px; height: 270px; }
+      .petal { width: 110px; height: 110px; }
+      .gallery-grid { gap: 1rem; }
+      .modal-card { max-width: 600px; }
+      .song-confirm { bottom: 2.5rem; }
+    }
+
+    /* fix envelope flap on all screen widths dynamically */
+    @media (max-width: 560px) {
+      .env-flap {
+        border-left-width: calc(50vw - 1.5rem);
+        border-right-width: calc(50vw - 1.5rem);
+        border-top-width: clamp(60px, 15vw, 90px);
+      }
+    }
 </head>
 <body>
 
   <canvas id="particles"></canvas>
 
-  <!-- background music (same folder as index.html) -->
+  <!-- background music -->
   <audio id="bgMusic" src="backgroundmusic.mp3" loop preload="auto"></audio>
+  <!-- happy birthday song -->
+  <audio id="hbMusic" src="happybirthday.mp3" preload="auto"></audio>
 
   <!-- Locked -->
   <div id="locked">
@@ -1133,7 +1240,7 @@
       </svg>
       <div class="emoji-burst">✦  ✦  ✦</div>
       <!-- Cake -->
-      <div class="cake-wrap">
+      <div class="cake-wrap" onclick="playCakeMusic()" style="cursor:pointer;">
         <div class="candles">
           <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
           <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
@@ -1152,10 +1259,11 @@
         </div>
         <div class="cake-plate"></div>
       </div>
+      <p class="cake-hint" id="cakeHint">✦ tap the cake ✦</p>
       <h1 class="bday-title">Happy Birthday,</h1>
       <h2 class="name">Krass</h2>
       <div class="divider"></div>
-      <button class="open-btn" onclick="showMenu()">Open ✦</button>
+      <button class="open-btn" id="continueBtn" style="display:none;" onclick="showMenu()">Continue ✦</button>
     </div>
 
     <!-- PAGE 2: Menu -->
@@ -1342,6 +1450,28 @@
       spawnHearts();
     }
 
+    /* cake music */
+    let cakePlayed = false;
+    function playCakeMusic() {
+      if (cakePlayed) return;
+      cakePlayed = true;
+      const hint = document.getElementById('cakeHint');
+      if (hint) hint.style.display = 'none';
+      const hb = document.getElementById('hbMusic');
+      hb.volume = 0.8;
+      hb.play().catch(() => {});
+      const showContinue = () => {
+        const btn = document.getElementById('continueBtn');
+        if (btn) {
+          btn.style.display = 'inline-block';
+          btn.style.animation = 'fadeUp 0.6s ease both';
+        }
+      };
+      // show continue after 30s or when song ends, whichever comes first
+      const timer = setTimeout(showContinue, 30000);
+      hb.addEventListener('ended', () => { clearTimeout(timer); showContinue(); }, { once: true });
+    }
+
     /* navigation */
     const allPages = ['pg-hero','pg-menu','pg-message','pg-pictures','pg-playlist'];
 
@@ -1364,6 +1494,10 @@
       const env = document.getElementById('envelope');
       if (env) env.classList.remove('open');
       document.getElementById('letterModal').classList.remove('show');
+      // stop music
+      const music = document.getElementById('bgMusic');
+      music.pause();
+      music.currentTime = 0;
       showOnly('pg-menu');
     }
 
