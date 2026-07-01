@@ -1160,6 +1160,7 @@
 
     <!-- PAGE 2: Menu -->
     <div id="pg-menu">
+      <button class="back-btn" onclick="showOnly('pg-hero')">‹ Back</button>
       <h1 class="bday-title">What would you like to see?</h1>
       <div class="divider"></div>
       <div class="menu-cards">
@@ -1338,9 +1339,6 @@
       bday.style.display = 'flex';
       document.body.classList.add('unlocked');
       showOnly('pg-hero');
-      const music = document.getElementById('bgMusic');
-      music.volume = 0.5;
-      music.play().catch(() => {});
       spawnHearts();
     }
 
@@ -1378,6 +1376,11 @@
       setTimeout(() => {
         document.getElementById('letterModal').classList.add('show');
       }, 350);
+      const music = document.getElementById('bgMusic');
+      if (music.paused) {
+        music.volume = 0.5;
+        music.play().catch(() => {});
+      }
     }
 
     function closeLetter(e) {
