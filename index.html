@@ -21,13 +21,38 @@
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       overflow-x: hidden;
       overflow-y: auto;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+
+    body.unlocked {
+      align-items: flex-start;
+      background: #0d001a;
+    }
+
+    body.unlocked::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, #0d001a, #1a0533, #3b0764, #7c2d8f, #db2777, #7c2d8f, #3b0764, #1a0533, #0d001a);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      pointer-events: none;
+    }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LOCKED ── */
 
     #locked {
       position: relative;
@@ -40,19 +65,10 @@
       color: #fff;
       padding: 2.5rem;
       gap: 1.6rem;
+      width: 100%;
       min-height: 100vh;
       min-height: 100dvh;
-      width: 100%;
     }
-
-    #particles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── LOCKED ── */
 
     .logo {
       position: relative;
@@ -188,12 +204,6 @@
     }
 
     #birthday::-webkit-scrollbar { display: none; }
-
-    body.unlocked {
-      background: linear-gradient(135deg, #0d001a, #1a0533, #3b0764, #7c2d8f, #db2777);
-      background-size: 400% 400%;
-      animation: gradientShift 10s ease infinite;
-    }
 
     @keyframes gradientShift {
       0%   { background-position: 0% 50%; }
