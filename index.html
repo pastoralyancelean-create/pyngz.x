@@ -895,33 +895,49 @@
     #videoOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(5, 0, 18, 0.96);
+      background: rgba(5, 0, 18, 0);
       z-index: 300;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       gap: 1.2rem;
       padding: 1.5rem;
-      animation: fadeIn 0.5s ease both;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.8s ease, background 0.8s ease;
     }
 
     #videoOverlay.show {
-      display: flex;
+      opacity: 1;
+      background: rgba(5, 0, 18, 0.97);
+      pointer-events: all;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    #videoOverlay .video-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      width: 100%;
+      max-width: 500px;
+      transform: scale(0.88) translateY(20px);
+      opacity: 0;
+      transition: transform 0.7s cubic-bezier(.34,1.2,.64,1) 0.3s,
+                  opacity 0.7s ease 0.3s;
+    }
+
+    #videoOverlay.show .video-inner {
+      transform: scale(1) translateY(0);
+      opacity: 1;
     }
 
     #videoOverlay video {
       width: 100%;
-      max-width: 500px;
-      max-height: 75vh;
+      max-height: 72vh;
       border-radius: 18px;
-      border: 1.5px solid rgba(244,114,182,0.4);
-      box-shadow: 0 0 50px rgba(244,114,182,0.3);
+      border: 1.5px solid rgba(244,114,182,0.45);
+      box-shadow: 0 0 60px rgba(244,114,182,0.35), 0 0 120px rgba(219,39,119,0.15);
       object-fit: contain;
       background: #000;
     }
@@ -937,13 +953,17 @@
       font-size: 0.88rem;
       letter-spacing: 2px;
       cursor: pointer;
-      transition: background 0.3s, border-color 0.3s;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      backdrop-filter: blur(4px);
     }
 
     #videoSkipBtn:hover {
       background: rgba(244,114,182,0.22);
       border-color: rgba(244,114,182,0.7);
+      transform: translateY(-2px);
     }
+
+    #videoSkipBtn:active { transform: scale(0.97); }
 
     /* ── SONG CONFIRM ── */
     .song-confirm {
@@ -1460,8 +1480,10 @@
 
   <!-- Video Overlay -->
   <div id="videoOverlay">
-    <video id="surpriseVideo" src="video.MOV" playsinline webkit-playsinline preload="metadata"></video>
-    <button id="videoSkipBtn" onclick="finishVideo()">Skip ✦</button>
+    <div class="video-inner">
+      <video id="surpriseVideo" src="video.MOV" playsinline webkit-playsinline preload="metadata"></video>
+      <button id="videoSkipBtn" onclick="finishVideo()">Skip ✦</button>
+    </div>
   </div>
 
   <script>
@@ -1563,25 +1585,70 @@
     }
 
     function showContinueBtn() {
-      // Show video first, then continue button after video ends
       const overlay = document.getElementById('videoOverlay');
       const video   = document.getElementById('surpriseVideo');
-      overlay.classList.add('show');
-      video.play().catch(() => {});
-      video.addEventListener('ended', finishVideo, { once: true });
+      const hb      = document.getElementById('hbMusic');
+
+      // 1. Fade out happy birthday song over 1s
+      fadeAudio(hb, 0, 1000, () => {
+        hb.pause();
+        hb.currentTime = 0;
+
+        // 2. Show overlay (CSS transition handles the fade-in)
+        overlay.classList.add('show');
+
+        // 3. Play video after overlay starts appearing
+        setTimeout(() => {
+          video.volume = 1;
+          video.play().catch(() => {});
+          video.addEventListener('ended', finishVideo, { once: true });
+        }, 400);
+      });
     }
 
     function finishVideo() {
       const overlay = document.getElementById('videoOverlay');
       const video   = document.getElementById('surpriseVideo');
-      video.pause();
-      overlay.classList.remove('show');
-      // Now reveal the continue button
-      const btn = document.getElementById('continueBtn');
-      if (btn) {
-        btn.style.display = 'inline-block';
-        btn.style.animation = 'fadeUp 0.6s ease both';
-      }
+      const bgMusic = document.getElementById('bgMusic');
+
+      // 1. Fade out video audio if any
+      fadeAudio(video, 0, 600, () => {
+        video.pause();
+
+        // 2. Fade out overlay
+        overlay.classList.remove('show');
+
+        // 3. After overlay fades out, show continue btn & fade in bg music
+        setTimeout(() => {
+          const btn = document.getElementById('continueBtn');
+          if (btn) {
+            btn.style.display = 'inline-block';
+            btn.style.animation = 'fadeUp 0.8s ease both';
+          }
+          // Gently fade in background music
+          bgMusic.volume = 0;
+          bgMusic.play().catch(() => {});
+          fadeAudio(bgMusic, 0.45, 2500);
+        }, 900);
+      });
+    }
+
+    /* utility: smoothly ramp audio volume */
+    function fadeAudio(audioEl, targetVol, durationMs, onDone) {
+      const startVol = audioEl.volume;
+      const diff     = targetVol - startVol;
+      const steps    = 40;
+      const interval = durationMs / steps;
+      let   step     = 0;
+      const timer = setInterval(() => {
+        step++;
+        audioEl.volume = Math.min(1, Math.max(0, startVol + diff * (step / steps)));
+        if (step >= steps) {
+          clearInterval(timer);
+          audioEl.volume = targetVol;
+          if (onDone) onDone();
+        }
+      }, interval);
     }
 
     /* navigation */
