@@ -1609,7 +1609,6 @@
     function finishVideo() {
       const overlay = document.getElementById('videoOverlay');
       const video   = document.getElementById('surpriseVideo');
-      const bgMusic = document.getElementById('bgMusic');
 
       // 1. Fade out video audio if any
       fadeAudio(video, 0, 600, () => {
@@ -1618,17 +1617,13 @@
         // 2. Fade out overlay
         overlay.classList.remove('show');
 
-        // 3. After overlay fades out, show continue btn & fade in bg music
+        // 3. After overlay fades out, show continue btn only — no bg music here
         setTimeout(() => {
           const btn = document.getElementById('continueBtn');
           if (btn) {
             btn.style.display = 'inline-block';
             btn.style.animation = 'fadeUp 0.8s ease both';
           }
-          // Gently fade in background music
-          bgMusic.volume = 0;
-          bgMusic.play().catch(() => {});
-          fadeAudio(bgMusic, 0.45, 2500);
         }, 900);
       });
     }
@@ -1677,26 +1672,32 @@
       const hb = document.getElementById('hbMusic');
       hb.pause();
       hb.currentTime = 0;
-      // stop bg music
+      // fade out bg music (in case letter was open when back is pressed)
       const music = document.getElementById('bgMusic');
-      music.pause();
-      music.currentTime = 0;
+      if (!music.paused) {
+        fadeAudio(music, 0, 800, () => {
+          music.pause();
+          music.currentTime = 0;
+        });
+      }
       showOnly('pg-menu');
     }
 
     function showPage(id) { showOnly(id); }
 
-    /* music toggle */    /* envelope / modal */
+    /* envelope / modal */
     function openLetter() {
       const env = document.getElementById('envelope');
       env.classList.add('open');
       setTimeout(() => {
         document.getElementById('letterModal').classList.add('show');
       }, 350);
+      // Start bg music only here — fade in smoothly
       const music = document.getElementById('bgMusic');
       if (music.paused) {
-        music.volume = 0.5;
+        music.volume = 0;
         music.play().catch(() => {});
+        fadeAudio(music, 0.5, 2000);
       }
     }
 
@@ -1706,6 +1707,14 @@
       setTimeout(() => {
         document.getElementById('envelope').classList.remove('open');
       }, 300);
+      // Fade out bg music when letter is closed
+      const music = document.getElementById('bgMusic');
+      if (!music.paused) {
+        fadeAudio(music, 0, 1200, () => {
+          music.pause();
+          music.currentTime = 0;
+        });
+      }
     }
 
     /* password */
