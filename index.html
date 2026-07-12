@@ -902,10 +902,15 @@
       justify-content: center;
       flex-direction: column;
       gap: 1.2rem;
-      padding: 1.5rem;
+      padding: 1rem;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.8s ease, background 0.8s ease;
+      /* safe area insets for notched phones */
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
     }
 
     #videoOverlay.show {
@@ -918,9 +923,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1rem;
       width: 100%;
-      max-width: 500px;
+      max-width: 560px;
       transform: scale(0.88) translateY(20px);
       opacity: 0;
       transition: transform 0.7s cubic-bezier(.34,1.2,.64,1) 0.3s,
@@ -934,12 +939,30 @@
 
     #videoOverlay video {
       width: 100%;
-      max-height: 72vh;
-      border-radius: 18px;
+      /* portrait phones: limit height so skip button is always visible */
+      max-height: 65vh;
+      border-radius: 14px;
       border: 1.5px solid rgba(244,114,182,0.45);
       box-shadow: 0 0 60px rgba(244,114,182,0.35), 0 0 120px rgba(219,39,119,0.15);
       object-fit: contain;
       background: #000;
+      display: block;
+      /* prevent iOS from going fullscreen automatically */
+      -webkit-playsinline: true;
+    }
+
+    /* landscape phones — give more room to video */
+    @media (orientation: landscape) and (max-height: 500px) {
+      #videoOverlay { flex-direction: row; flex-wrap: wrap; gap: 0.6rem; }
+      #videoOverlay .video-inner { flex-direction: row; align-items: center; max-width: 100%; }
+      #videoOverlay video { max-height: 85vh; max-width: 80vw; border-radius: 10px; }
+      #videoSkipBtn { writing-mode: horizontal-tb; }
+    }
+
+    /* large screens — don't stretch too wide */
+    @media (min-width: 768px) {
+      #videoOverlay video { max-height: 75vh; border-radius: 18px; }
+      #videoOverlay .video-inner { max-width: 640px; }
     }
 
     #videoSkipBtn {
@@ -955,6 +978,10 @@
       cursor: pointer;
       transition: background 0.3s, border-color 0.3s, transform 0.2s;
       backdrop-filter: blur(4px);
+      /* make it big enough to tap on mobile */
+      min-width: 120px;
+      min-height: 44px;
+      touch-action: manipulation;
     }
 
     #videoSkipBtn:hover {
@@ -1481,7 +1508,17 @@
   <!-- Video Overlay -->
   <div id="videoOverlay">
     <div class="video-inner">
-      <video id="surpriseVideo" src="video.MOV" playsinline webkit-playsinline preload="metadata"></video>
+      <video id="surpriseVideo"
+        playsinline
+        webkit-playsinline
+        x-webkit-airplay="allow"
+        preload="metadata"
+        disablePictureInPicture
+        controlsList="nodownload nofullscreen noremoteplayback">
+        <source src="video.mp4" type="video/mp4" />
+        <source src="video.MOV" type="video/quicktime" />
+        <source src="video.mov" type="video/quicktime" />
+      </video>
       <button id="videoSkipBtn" onclick="finishVideo()">Skip ✦</button>
     </div>
   </div>
@@ -1600,7 +1637,19 @@
         // 3. Play video after overlay starts appearing
         setTimeout(() => {
           video.volume = 1;
-          video.play().catch(() => {});
+          // mute first to satisfy strict autoplay policies, then unmute
+          video.muted = true;
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              // successfully playing — unmute
+              video.muted = false;
+            }).catch(() => {
+              // autoplay blocked — still show video but skip after short delay
+              video.muted = false;
+              finishVideo();
+            });
+          }
           video.addEventListener('ended', finishVideo, { once: true });
         }, 400);
       });
