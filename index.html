@@ -891,6 +891,60 @@
       animation: fadeUp 1s ease 1.4s both;
     }
 
+    /* ── VIDEO OVERLAY ── */
+    #videoOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 0, 18, 0.96);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding: 1.5rem;
+      animation: fadeIn 0.5s ease both;
+    }
+
+    #videoOverlay.show {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #videoOverlay video {
+      width: 100%;
+      max-width: 500px;
+      max-height: 75vh;
+      border-radius: 18px;
+      border: 1.5px solid rgba(244,114,182,0.4);
+      box-shadow: 0 0 50px rgba(244,114,182,0.3);
+      object-fit: contain;
+      background: #000;
+    }
+
+    #videoSkipBtn {
+      padding: 0.55rem 1.8rem;
+      border-radius: 50px;
+      border: 1px solid rgba(244,114,182,0.4);
+      background: rgba(244,114,182,0.1);
+      color: #f9a8d4;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    #videoSkipBtn:hover {
+      background: rgba(244,114,182,0.22);
+      border-color: rgba(244,114,182,0.7);
+    }
+
     /* ── SONG CONFIRM ── */
     .song-confirm {
       position: fixed;
@@ -1404,6 +1458,12 @@
 
   </div>
 
+  <!-- Video Overlay -->
+  <div id="videoOverlay">
+    <video id="surpriseVideo" src="video.MOV" playsinline webkit-playsinline preload="metadata"></video>
+    <button id="videoSkipBtn" onclick="finishVideo()">Skip ✦</button>
+  </div>
+
   <script>
     /* particles */
     const canvas = document.getElementById('particles');
@@ -1503,6 +1563,20 @@
     }
 
     function showContinueBtn() {
+      // Show video first, then continue button after video ends
+      const overlay = document.getElementById('videoOverlay');
+      const video   = document.getElementById('surpriseVideo');
+      overlay.classList.add('show');
+      video.play().catch(() => {});
+      video.addEventListener('ended', finishVideo, { once: true });
+    }
+
+    function finishVideo() {
+      const overlay = document.getElementById('videoOverlay');
+      const video   = document.getElementById('surpriseVideo');
+      video.pause();
+      overlay.classList.remove('show');
+      // Now reveal the continue button
       const btn = document.getElementById('continueBtn');
       if (btn) {
         btn.style.display = 'inline-block';
